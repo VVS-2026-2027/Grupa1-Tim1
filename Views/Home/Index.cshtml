@@ -1,8 +1,100 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Početna";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    body {
+        background-color: #fcf8f2;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        position: relative;
+        min-height: 100vh;
+    }
+
+    /* Kontejner sa tekstom i dugmetom u gornjem/srednjem dijelu */
+    .welcome-container {
+        padding-top: 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: relative;
+        z-index: 2; /* Osigurava da je tekst ispred slika ako se preklope */
+    }
+
+    /* Font za BentoLab naziv */
+    .bento-main-title {
+        font-family: 'Playfair Display', 'Georgia', serif;
+        font-size: 4.5rem;
+        font-weight: 700;
+        color: #5d4037;
+        margin-bottom: 5px;
+        letter-spacing: -1px;
+    }
+
+    /* Podnaslov */
+    .bento-subtitle {
+        font-family: 'Lora', 'Georgia', serif;
+        font-size: 1.6rem;
+        font-style: italic;
+        color: #8d6e63;
+        margin-bottom: 40px;
+        font-weight: 400;
+    }
+
+    /* Glavno dugme "Nastavi ➔" */
+    .btn-bento-continue {
+        background-color: #e29b83;
+        color: white !important;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.25rem;
+        font-weight: 600;
+        padding: 14px 50px;
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 4px 15px rgba(226, 155, 131, 0.3);
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .btn-bento-continue:hover {
+            background-color: #d1856c;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(226, 155, 131, 0.4);
+        }
+
+    /* Fiksiranje pozadine */
+    .bento-bottom-cakes {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100vw; 
+        height: auto;
+        max-height: 32vh;
+        object-fit: cover; /* Sprječava izobličenje i rastezanje */
+        z-index: 1;
+        pointer-events: none; /* Ignoriše klikove miša kako ne bi smetala elementima iza nje */
+    }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,400&family=Montserrat:wght@600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+<div class="welcome-container">
+    <h1 class="bento-main-title">BentoLab</h1>
+    <p class="bento-subtitle">Tvoja poruka, tvoj okus, tvoja savršena bento torta</p>
+
+    <div>
+        <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-bento-continue shadow">
+            Nastavi <span style="font-size: 1.4rem; line-height: 1;">➔</span>
+        </a>
+    </div>
 </div>
+
+<img src="/images/crop-removebg-preview.png" alt="Bento Torte" class="bento-bottom-cakes" />

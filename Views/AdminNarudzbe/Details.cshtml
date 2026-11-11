@@ -1,0 +1,61 @@
+﻿@model BentoLab.Models.Narudzba
+
+@{
+    ViewData["Title"] = "Detalji narudžbe";
+}
+
+<div class="container mt-5" style="max-width: 900px;">
+    <div style="background:white; border-radius:20px; padding:35px; box-shadow:0 10px 30px rgba(93,64,55,0.10); border:1px solid rgba(226,155,131,0.25);">
+
+        <h2 style="font-family:'Playfair Display',serif; color:#5d4037; font-weight:700;">
+            📦 Detalji narudžbe #@Model.NarudzbaID
+        </h2>
+
+        <p style="color:#8d6e63;">
+            Kupac: <strong>@Model.Korisnik?.Email</strong><br />
+            Datum narudžbe: <strong>@Model.DatumNarudzbe.ToString("dd.MM.yyyy HH:mm")</strong><br />
+            Status: <strong>@Model.Status</strong>
+        </p>
+
+        <table class="table table-bordered mt-4">
+            <thead style="background:#e29b83; color:white;">
+                <tr>
+                    <th>Torta</th>
+                    <th>Količina</th>
+                    <th>Cijena stavke</th>
+                    <th>Ukupno</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Stavke != null && Model.Stavke.Any())
+                {
+                    foreach (var stavka in Model.Stavke)
+                    {
+                        <tr>
+                            <td>@stavka.Torta?.Naziv</td>
+                            <td>@stavka.Kolicina</td>
+                            <td>@stavka.CijenaStavke.ToString("0.00") KM</td>
+                            <td>@((stavka.Kolicina * stavka.CijenaStavke).ToString("0.00")) KM</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" class="text-center text-muted">Nema stavki za ovu narudžbu.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between mt-4">
+            <a asp-controller="AdminNarudzbe" asp-action="Index" class="btn btn-light">
+                ← Nazad na narudžbe
+            </a>
+
+            <a asp-controller="Kamera" asp-action="UslikajBento" asp-route-narudzbaId="@Model.NarudzbaID" class="btn text-white" style="background:#e29b83;">
+                📸 Pošalji sliku
+            </a>
+        </div>
+    </div>
+</div>

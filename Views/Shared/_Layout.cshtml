@@ -1,50 +1,128 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using Microsoft.AspNetCore.Identity
+@using BentoLab.Models
+@inject UserManager<Korisnik> UserManager
+
+@{
+    var korisnik = Context.User.Identity != null && Context.User.Identity.IsAuthenticated
+    ? await UserManager.GetUserAsync(Context.User)
+    : null;
+
+    var pocetnaController = korisnik?.Uloga == Uloga.ADMIN ? "Home" : "Torta";
+    var pocetnaAction = korisnik?.Uloga == Uloga.ADMIN ? "AdminPanel" : "Index";
+}
+
+<!DOCTYPE html>
+<html lang="bs">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BentoLab</title>
+
+    <script type="importmap"></script>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BentoLab.styles.css" asp-append-version="true" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
+
 <body>
+
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BentoLab</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3"
+             style="background-color: #fcf8f2; border-bottom: 1px solid rgba(93, 64, 55, 0.1);">
+
+            <div class="container-fluid px-4">
+
+                <a class="navbar-brand d-flex align-items-center"
+                       asp-area=""
+                       asp-controller="@pocetnaController"
+                       asp-action="@pocetnaAction"
+                       style="font-family: 'Playfair Display', serif;
+                    font-weight: 700;
+                    color: #5d4037;
+                    font-size: 1.4rem;">
+
+                    <img src="/images/bento-logo.png"
+                         alt="Logo"
+                         style="height: 40px;
+                    width: auto;
+                    margin-right: 12px;
+                    filter: drop-shadow(0px 2px 4px rgba(93, 64, 55, 0.15));" />
+
+                    BentoLab
+                </a>
+
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Prikaži navigaciju">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                    <ul class="navbar-nav flex-grow-1 ms-3">
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link"
+                                   asp-area=""
+                                   asp-controller="@pocetnaController"
+                                   asp-action="@pocetnaAction"
+                                   style="font-family: 'Montserrat', sans-serif;
+                                color: #8d6e63;
+                                font-weight: 500;">
+                                Početna
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+
                     </ul>
-                    <partial name="_LoginPartial" />
+
+                    <div class="d-flex align-items-center"
+                         style="font-family: 'Montserrat', sans-serif;">
+
+                        <partial name="_LoginPartial" />
+
+                    </div>
+
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - BentoLab - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="border-top footer text-muted"
+            style="background-color: #fcf8f2;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9rem;">
+
+        <div class="container text-center py-3"
+             style="color: #8d6e63;">
+
+            &copy; 2026 - BentoLab
+
         </div>
+
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

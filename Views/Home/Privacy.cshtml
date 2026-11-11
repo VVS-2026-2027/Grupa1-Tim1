@@ -1,6 +1,33 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
-}
-<h1>@ViewData["Title"]</h1>
+﻿@using Microsoft.AspNetCore.Identity
+@using BentoLab.Models
+@inject SignInManager<Korisnik> SignInManager
+@inject UserManager<Korisnik> UserManager
 
-<p>Use this page to detail your site's privacy policy.</p>
+@{
+    ViewData["Title"] = "Moj Profil";
+}
+
+<div class="container mt-5">
+    <h1>@ViewData["Title"]</h1>
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        var trenutniKorisnik = await UserManager.GetUserAsync(User);
+        
+        <div class="card p-4 shadow-sm mt-3">
+            <div class="card-body">
+                <h4 class="card-title text-primary">Informacije o računu</h4>
+                <hr />
+                <p><strong>Ime i Prezime:</strong> @trenutniKorisnik?.ImePrezime</p>
+                <p><strong>Email / Korisničko ime:</strong> @trenutniKorisnik?.Email</p>
+                <p><strong>Uloga u sistemu:</strong> <span class="badge bg-info text-dark">@trenutniKorisnik?.Uloga</span></p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning mt-3">
+            Morate biti <a asp-area="Identity" asp-page="/Account/Login">prijavljeni</a> da biste vidjeli svoj profil.
+        </div>
+    }
+</div>
