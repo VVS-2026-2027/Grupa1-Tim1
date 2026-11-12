@@ -1,0 +1,30 @@
+@model IEnumerable<OCULIS.Models.Reklamacija>
+@{ ViewData["Title"] = "Reklamacije"; }
+
+<h1 class="page-title"><i class="fa-solid fa-message me-2"></i>Reklamacije</h1>
+@if (User.IsInRole("Kupac"))
+{
+    <a asp-action="Create" class="btn btn-oculis mb-3">Podnesi reklamaciju</a>
+}
+<div class="table-oculis">
+    <table class="table table-hover mb-0">
+        <thead class="table-light"><tr><th>Datum</th><th>Korisnik</th><th>Opis</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.DatumPodnosenja.ToString("dd.MM.yyyy")</td>
+                <td>@r.Korisnik?.Ime @r.Korisnik?.Prezime</td>
+                <td>@(r.Opis.Length > 60 ? r.Opis[..60] + "..." : r.Opis)</td>
+                <td><span class="badge bg-warning">@r.Status</span></td>
+                <td>
+                    @if (User.IsInRole("Zaposlenik") || User.IsInRole("Administrator"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@r.Id" class="btn btn-sm btn-outline-secondary">Obradi</a>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

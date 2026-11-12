@@ -1,0 +1,31 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout != null)
+    {
+        Layout = parentLayout.ToString();
+    }
+    else
+    {
+        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+    }
+}
+<section class="account-page">
+    <div class="account-header">
+        <span>OCULIS PROFIL</span>
+        <h1>Moj profil</h1>
+        <p>Uredite postavke svog korisničkog računa.</p>
+    </div>
+
+    <div class="account-layout">
+        <aside class="account-sidebar">
+            <partial name="_ManageNav" />
+        </aside>
+
+        <div class="account-card">
+            @RenderBody()
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @await RenderSectionAsync("Scripts", required: false)
+}

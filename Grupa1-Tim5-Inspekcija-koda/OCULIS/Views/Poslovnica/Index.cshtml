@@ -1,0 +1,57 @@
+@model IEnumerable<OCULIS.Models.Poslovnica>
+
+@{
+    ViewData["Title"] = "Poslovnice";
+
+    var prvaPoslovnica = Model.FirstOrDefault(p => p.Latitude != 0 && p.Longitude != 0);
+
+    var mapLat = prvaPoslovnica != null ? prvaPoslovnica.Latitude.ToString(System.Globalization.CultureInfo.InvariantCulture) : "43.8563";
+    var mapLng = prvaPoslovnica != null ? prvaPoslovnica.Longitude.ToString(System.Globalization.CultureInfo.InvariantCulture) : "18.4131";
+}
+
+<section class="branches-header">
+    <span class="catalog-label">OCULIS MREŽA</span>
+    <h1 class="branches-title">
+        <i class="fa-solid fa-map-location-dot me-2"></i>Poslovnice
+    </h1>
+    <p class="branches-subtitle">
+        Pronađite najbližu OCULIS poslovnicu i pregledajte osnovne informacije, lokaciju i radno vrijeme.
+    </p>
+</section>
+
+<div class="branches-top-layout">
+    <div class="branches-map-card branches-map-full">
+        <iframe src="https://www.google.com/maps?q=@mapLat,@mapLng&z=13&output=embed"
+                width="100%"
+                height="430"
+                style="border:0; border-radius: 22px;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+</div>
+
+<div class="branches-grid">
+    @foreach (var p in Model)
+    {
+        <div class="branch-card"
+             data-naziv="@p.Naziv"
+             data-adresa="@p.Adresa"
+             data-lat="@p.Latitude"
+             data-lng="@p.Longitude">
+
+            <h4>@p.Naziv</h4>
+
+            <div class="branch-meta">
+                <p><i class="fa-solid fa-location-dot"></i> @p.Adresa</p>
+                <p><i class="fa-solid fa-phone"></i> @p.Telefon</p>
+                <p><i class="fa-solid fa-clock"></i> @p.RadnoVrijeme</p>
+            </div>
+
+            <a asp-action="Details" asp-route-id="@p.Id" class="btn branch-show-btn">
+                Prikaži
+            </a>
+        </div>
+    }
+</div>

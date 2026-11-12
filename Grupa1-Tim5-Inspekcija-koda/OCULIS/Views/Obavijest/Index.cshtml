@@ -1,0 +1,25 @@
+@model IEnumerable<OCULIS.Models.Obavijest>
+@{ ViewData["Title"] = "Obavijesti"; }
+
+<h1 class="page-title"><i class="fa-solid fa-bell me-2"></i>Obavijesti</h1>
+@if (User.IsInRole("Administrator"))
+{
+    <a asp-action="Create" class="btn btn-oculis mb-3">Pošalji obavijest</a>
+}
+@foreach (var o in Model)
+{
+    <div class="filter-card mb-3">
+        <div class="d-flex justify-content-between">
+            <h5>@o.Naslov</h5>
+            <small class="text-muted">@o.DatumSlanja.ToString("dd.MM.yyyy HH:mm")</small>
+        </div>
+        <p class="mb-1">@o.Tekst</p>
+        <small class="text-muted">
+            @if (User.IsInRole("Administrator") || User.IsInRole("Zaposlenik"))
+            {
+                <span>Korisnik: @o.Korisnik?.Email — </span>
+            }
+            @(o.PoslanoEmailom ? "Poslano emailom" : "Samo u sistemu")
+        </small>
+    </div>
+}

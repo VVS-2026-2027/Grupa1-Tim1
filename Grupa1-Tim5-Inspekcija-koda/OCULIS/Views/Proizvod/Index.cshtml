@@ -1,0 +1,150 @@
+@model OCULIS.Models.ViewModels.ProizvodPretragaViewModel
+
+@{
+    ViewData["Title"] = "Proizvodi";
+
+    string SlikaZaProizvod(OCULIS.Models.Proizvod p)
+    {
+        var naziv = (p.Naziv ?? "").ToLower();
+        var proizvodjac = (p.Proizvodjac ?? "").ToLower();
+        var kategorija = p.Kategorija.ToString();
+
+        if (kategorija == "KontaktnaSociva")
+        {
+            return "/images/products/contact-lenses.png";
+        }
+
+        if (kategorija == "DodatnaOprema")
+        {
+            return "/images/products/cleaning-kit.png";
+        }
+
+        if (kategorija == "SuncaneNaocale")
+        {
+            if (naziv.Contains("ray") || naziv.Contains("aviator") || proizvodjac.Contains("ray"))
+                return "/images/products/product5.png";
+
+            if (naziv.Contains("oakley") || naziv.Contains("holbrook") || proizvodjac.Contains("oakley"))
+                return "/images/products/product3.png";
+
+            return "/images/products/product3.png";
+        }
+
+        if (kategorija == "DioptrijskeNaocale")
+        {
+            if (naziv.Contains("vogue") || proizvodjac.Contains("vogue"))
+                return "/images/products/product4.png";
+
+            if (naziv.Contains("essilor") || naziv.Contains("varilux") || proizvodjac.Contains("essilor"))
+                return "/images/products/product2.png";
+
+            return "/images/products/product1.png";
+        }
+
+        return "/images/products/product1.png";
+    }
+}
+
+<section class="catalog-hero">
+    <span class="catalog-label">OCULIS KOLEKCIJA</span>
+    <h1>Proizvodi</h1>
+    <p>
+        Pažljivo odabrana kolekcija naočala, sočiva i dodatne opreme za svaki stil i potrebu.
+    </p>
+</section>
+
+<div class="catalog-filter-card">
+    <form method="get" class="row g-3 align-items-end">
+        <div class="col-md-3">
+            <label class="form-label">Pretraga</label>
+            <input asp-for="Pretraga" class="form-control luxury-input" placeholder="Naziv, proizvođač..." />
+        </div>
+
+        <div class="col-md-2">
+            <label class="form-label">Kategorija</label>
+            <select asp-for="Kategorija" class="form-select luxury-input" asp-items="Html.GetEnumSelectList<OCULIS.Models.KategorijaProizvoda>()">
+                <option value="">Sve</option>
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <label class="form-label">Proizvođač</label>
+            <input asp-for="Proizvodjac" class="form-control luxury-input" placeholder="npr. Ray-Ban" />
+        </div>
+
+        <div class="col-md-2">
+            <label class="form-label">Min cijena</label>
+            <input asp-for="MinCijena" type="number" step="0.01" class="form-control luxury-input" />
+        </div>
+
+        <div class="col-md-2">
+            <label class="form-label">Max cijena</label>
+            <input asp-for="MaxCijena" type="number" step="0.01" class="form-control luxury-input" />
+        </div>
+
+        <div class="col-md-1">
+            <label class="form-label">Sort</label>
+            <select asp-for="Sortiranje" class="form-select luxury-input">
+                <option value="naziv">Naziv</option>
+                <option value="cijena_asc">Cijena ↑</option>
+                <option value="cijena_desc">Cijena ↓</option>
+            </select>
+        </div>
+
+        <div class="col-12 d-flex gap-2 flex-wrap">
+            <button type="submit" class="btn btn-luxury-primary">
+                <i class="fa-solid fa-search me-1"></i> Pretraži
+            </button>
+
+            <a href="/Proizvod" class="btn btn-luxury-secondary">
+                Očisti filtere
+            </a>
+
+            @if (User.IsInRole("Administrator"))
+            {
+                <a asp-action="Create" class="btn btn-luxury-secondary">
+                    <i class="fa-solid fa-plus me-1"></i> Novi proizvod
+                </a>
+            }
+        </div>
+    </form>
+</div>
+
+@if (!Model.Proizvodi.Any())
+{
+    <div class="catalog-empty">
+        <i class="fa-regular fa-face-frown"></i>
+        <h3>Nema proizvoda</h3>
+        <p>Nema proizvoda za zadate kriterije pretrage.</p>
+    </div>
+}
+else
+{
+    <div class="catalog-grid">
+        @foreach (var p in Model.Proizvodi)
+        {
+            var slika = SlikaZaProizvod(p);
+
+            <article class="catalog-product-card">
+                <div class="catalog-product-image">
+                    <img src="@slika" alt="@p.Naziv" />
+                    <span class="catalog-badge">@p.Kategorija</span>
+                </div>
+
+                <div class="catalog-product-content">
+                    <p class="catalog-brand">@p.Proizvodjac</p>
+                    <h5>@p.Naziv</h5>
+
+                    <div class="catalog-meta">
+                        <span>Dostupno: @p.DostupnaKolicina</span>
+                    </div>
+
+                    <div class="catalog-product-footer">
+                        <strong>@p.Cijena.ToString("F2") KM</strong>
+                        <a href="/Proizvod/Details/@p.Id">Detalji</a>
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+}

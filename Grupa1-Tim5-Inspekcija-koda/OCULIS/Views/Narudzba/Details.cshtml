@@ -1,0 +1,131 @@
+@model OCULIS.Models.Narudzba
+
+@{
+    ViewData["Title"] = "Detalji narudžbe";
+}
+
+<section class="order-details-page">
+    <div class="order-details-header">
+        <span>OCULIS KUPOVINA</span>
+        <h1>Detalji narudžbe</h1>
+    </div>
+
+    <div class="order-details-layout">
+        <div class="order-details-card">
+            <h3>Informacije</h3>
+
+            <div class="order-info-list">
+                <div>
+                    <span>Datum</span>
+                    <strong>@Model.DatumNarudzbe.ToString("dd.MM.yyyy HH:mm")</strong>
+                </div>
+
+                <div>
+                    <span>Status</span>
+                    <strong class="order-status">@Model.Status</strong>
+                </div>
+
+                <div>
+                    <span>Adresa</span>
+                    <strong>@Model.AdresaIsporuke</strong>
+                </div>
+
+                <div>
+                    <span>Osnovna cijena</span>
+                    <strong>@Model.OsnovnaCijena.ToString("F2") KM</strong>
+                </div>
+
+                <div>
+                    <span>Popust</span>
+                    <strong>@Model.PopustPostotak% (-@Model.PopustIznos.ToString("F2") KM)</strong>
+                </div>
+
+                <div class="order-info-total">
+                    <span>Ukupno</span>
+                    <strong>@Model.UkupnaCijena.ToString("F2") KM</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="order-details-card">
+            <h3>Stavke</h3>
+
+            @if (Model.Stavke.Any())
+            {
+                <div class="order-items-list">
+                    @foreach (var s in Model.Stavke)
+                    {
+                        <div class="order-item-row">
+                            <span>@(s.NazivProizvoda ?? s.Proizvod?.Naziv ?? "Proizvod") x @s.Kolicina</span>
+                            <strong>@((s.Cijena * s.Kolicina).ToString("F2")) KM</strong>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p class="text-muted mb-0">
+                    Stavke nisu sačuvane za ovu narudžbu.
+                </p>
+            }
+        </div>
+    </div>
+
+    <div class="order-details-actions">
+        @if (User.IsInRole("Kupac") && !Model.Placanja.Any(p => p.StatusPlacanja == OCULIS.Models.StatusPlacanja.Uspjesno))
+        {
+            <a asp-controller="Placanje"
+                   asp-action="Plati"
+                   asp-route-narudzbaId="@Model.Id"
+                   class="order-primary-btn">
+                Nastavi na plaćanje
+            </a>
+        }
+
+        @if (User.IsInRole("Zaposlenik") || User.IsInRole("Administrator"))
+        {
+            <a asp-action="Edit"
+                   asp-route-id="@Model.Id"
+                   class="order-secondary-btn">
+                Promijeni status
+            </a>
+        }
+
+        <a asp-action="Index" class="order-secondary-btn">
+            Nazad
+        </a>
+    </div>
+
+    @if (Model.Placanja.Any())
+    {
+        <div class="order-details-card order-payments-card">
+            <h3>Plaćanja</h3>
+
+            @foreach (var p in Model.Placanja)
+            {
+                <div class="order-payment-row">
+                    <span>@p.NacinPlacanja — @p.StatusPlacanja</span>
+                    <strong>@p.Iznos.ToString("F2") KM</strong>
+
+                    @if (!string.IsNullOrEmpty(p.ReferencaTransakcije))
+                    {
+                        <small>@p.ReferencaTransakcije</small>
+                    }
+
+                    @if (p.NacinPlacanja == OCULIS.Models.NacinPlacanja.Gotovina &&
+                         p.StatusPlacanja == OCULIS.Models.StatusPlacanja.NaCekanju &&
+                         (User.IsInRole("Zaposlenik") || User.IsInRole("Administrator")))
+                    {
+                        <form asp-controller="Placanje" asp-action="PotvrdiGotovinu" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@p.Id" />
+                            <button class="btn btn-success btn-sm">
+                                Potvrdi gotovinu
+                            </button>
+                        </form>
+                    }
+                </div>
+            }
+        </div>
+    }
+</section>

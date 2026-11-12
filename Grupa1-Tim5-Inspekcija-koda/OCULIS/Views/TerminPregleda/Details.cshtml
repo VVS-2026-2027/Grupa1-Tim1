@@ -1,0 +1,53 @@
+@model OCULIS.Models.TerminPregleda
+
+@{
+    ViewData["Title"] = "Termin pregleda";
+}
+
+<div class="zakazi-page">
+    <div class="filter-card zakazi-card">
+
+        <div class="reservation-header">
+            <span>TERMIN USPJEŠNO ZAKAZAN</span>
+            <h2>TERMIN PREGLEDA</h2>
+            <p>Vaš termin pregleda vida je evidentiran u sistemu.</p>
+        </div>
+
+        <div class="termin-details-grid">
+            <div>
+                <strong>Datum</strong>
+                <span>@Model.Datum.ToString("dd.MM.yyyy")</span>
+            </div>
+
+            <div>
+                <strong>Vrijeme</strong>
+                <span>@Model.Vrijeme.ToString(@"hh\:mm")</span>
+            </div>
+
+            <div>
+                <strong>Poslovnica</strong>
+                <span>@Model.Poslovnica.Naziv — @Model.Poslovnica.Adresa</span>
+            </div>
+
+            <div>
+                <strong>Korisnik</strong>
+                <span>@Model.Korisnik.Ime @Model.Korisnik.Prezime</span>
+            </div>
+
+            <div>
+                <strong>Status</strong>
+                <span class="termin-status">@Model.Status</span>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center gap-2 flex-wrap mt-4">
+            <a asp-action="Index" class="btn btn-oculis">
+                Moji termini
+            </a>
+
+            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">
+                Nazad na početnu
+            </a>
+        </div>
+    </div>
+</div>

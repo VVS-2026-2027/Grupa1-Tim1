@@ -1,0 +1,15 @@
+@model OCULIS.Models.ElektronskiKarton
+@{ ViewData["Title"] = "Novi karton"; }
+
+<h1 class="page-title">Novi elektronski karton</h1>
+<div class="filter-card col-lg-8">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="IdKorisnik" class="form-label">Korisnik</label>
+            <select asp-for="IdKorisnik" class="form-select" asp-items="ViewBag.IdKorisnik"></select>
+        </div>
+        <div class="mb-3"><label asp-for="Napomena" class="form-label"></label><textarea asp-for="Napomena" class="form-control" rows="3"></textarea></div>
+        <button type="submit" class="btn btn-oculis">Kreiraj</button>
+    </form>
+</div>

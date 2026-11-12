@@ -1,0 +1,59 @@
+@model IEnumerable<OCULIS.Models.PregledVida>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DatumPregleda)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DioptrijaLijevo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DioptrijaDesno)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Preporuka)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElektronskiKarton)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatumPregleda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DioptrijaLijevo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DioptrijaDesno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Preporuka)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ElektronskiKarton.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

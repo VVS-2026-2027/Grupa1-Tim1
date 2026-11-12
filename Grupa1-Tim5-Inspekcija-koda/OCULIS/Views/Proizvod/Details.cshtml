@@ -1,0 +1,168 @@
+@model OCULIS.Models.Proizvod
+
+@{
+    ViewData["Title"] = "Detalji proizvoda";
+
+    string SlikaZaProizvod(OCULIS.Models.Proizvod p)
+    {
+        var naziv = (p.Naziv ?? "").ToLower();
+        var kategorija = p.Kategorija.ToString();
+
+        if (kategorija == "SuncaneNaocale")
+        {
+            if (naziv.Contains("ray") || naziv.Contains("aviator"))
+                return "/images/products/product5.png";
+
+            if (naziv.Contains("oakley") || naziv.Contains("holbrook"))
+                return "/images/products/product3.png";
+
+            return "/images/products/product3.png";
+        }
+
+        if (kategorija == "DioptrijskeNaocale")
+        {
+            if (naziv.Contains("vogue"))
+                return "/images/products/product4.png";
+
+            if (naziv.Contains("essilor") || naziv.Contains("varilux"))
+                return "/images/products/product2.png";
+
+            return "/images/products/product1.png";
+        }
+
+        if (kategorija == "KontaktnaSociva")
+            return "/images/products/contact-lenses.png";
+
+        if (kategorija == "DodatnaOprema")
+            return "/images/products/cleaning-kit.png";
+
+        return "/images/products/product1.png";
+    }
+
+    string OpisZaProizvod(OCULIS.Models.Proizvod p)
+    {
+        var naziv = (p.Naziv ?? "").ToLower();
+        var kategorija = p.Kategorija.ToString();
+
+        if (kategorija == "SuncaneNaocale")
+        {
+            if (naziv.Contains("ray") || naziv.Contains("aviator"))
+                return "Elegantne aviator sunčane naočale sa metalnim okvirom i klasičnim sofisticiranim izgledom.";
+
+            if (naziv.Contains("oakley") || naziv.Contains("holbrook"))
+                return "Moderne sunčane naočale sa izraženim okvirom, odlične za svakodnevni stil i zaštitu od sunca.";
+
+            return "Pažljivo odabrane sunčane naočale koje spajaju zaštitu, udobnost i prepoznatljiv stil.";
+        }
+
+        if (kategorija == "DioptrijskeNaocale")
+        {
+            if (naziv.Contains("vogue"))
+                return "Prefinjene dioptrijske naočale modernog dizajna koje donose eleganciju i udobnost u svakodnevnom nošenju.";
+
+            if (naziv.Contains("essilor") || naziv.Contains("varilux"))
+                return "Minimalističke dioptrijske naočale sa laganim metalnim okvirom i bezvremenskim izgledom.";
+
+            return "Kvalitetne dioptrijske naočale dizajnirane za jasan vid, udobnost i elegantan izgled.";
+        }
+
+        if (kategorija == "KontaktnaSociva")
+            return "Pouzdana kontaktna sočiva za udobno svakodnevno nošenje i jasan, prirodan vid.";
+
+        if (kategorija == "DodatnaOprema")
+            return "Praktična dodatna oprema za održavanje naočala i sočiva, uz uredan i elegantan izgled.";
+
+        return "Pažljivo odabran proizvod iz OCULIS ponude.";
+    }
+
+    string Slika = !string.IsNullOrEmpty(Model.SlikaUrl) ? Model.SlikaUrl : SlikaZaProizvod(Model);
+    string Opis = OpisZaProizvod(Model);
+}
+
+<section class="product-details-luxury">
+    <div class="product-details-info">
+        <span class="product-details-label">@Model.Proizvodjac?.ToUpper()</span>
+
+        <h1>@Model.Naziv</h1>
+
+        <div class="product-details-category">@Model.Kategorija</div>
+
+        <p class="product-details-description">
+            @Opis
+        </p>
+
+        <div class="product-details-specs">
+            <div class="product-spec-row">
+                <span>Kategorija</span>
+                <strong>@Model.Kategorija</strong>
+            </div>
+
+            <div class="product-spec-row">
+                <span>Proizvođač</span>
+                <strong>@Model.Proizvodjac</strong>
+            </div>
+
+            <div class="product-spec-row">
+                <span>Cijena</span>
+                <strong class="product-price">@Model.Cijena.ToString("F2") KM</strong>
+            </div>
+
+            <div class="product-spec-row">
+                <span>Dostupnost</span>
+                <strong>@Model.DostupnaKolicina kom</strong>
+            </div>
+        </div>
+
+        <div class="product-details-actions">
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <form asp-controller="Korpa"
+                      asp-action="Dodaj"
+                      method="post"
+                      class="details-cart-form">
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden" name="proizvodId" value="@Model.Id" />
+                    <input type="hidden" name="kolicina" value="1" />
+
+            
+
+                    <button type="submit" class="btn btn-details-primary">
+                        Dodaj u korpu
+                    </button>
+                </form>
+            }
+            else
+            {
+                <a asp-area="Identity"
+                   asp-page="/Account/Login"
+                   asp-route-returnUrl="@Url.Action("Details", "Proizvod", new { id = Model.Id })"
+                   class="btn btn-details-primary">
+                    Dodaj u korpu
+                </a>
+
+                <p class="login-note">
+                    Za dodavanje proizvoda u korpu potrebno je da se prijavite.
+                </p>
+            }
+
+            <a asp-controller="Proizvod" asp-action="Index" class="btn btn-details-secondary">
+                Nazad na proizvode
+            </a>
+            @if (User.Identity?.Name == "admin@oculis.ba")
+            {
+                <a asp-controller="Proizvod"
+                   asp-action="Delete"
+                   asp-route-id="@Model.Id"
+                   class="btn btn-danger">
+                    Obriši proizvod
+                </a>
+            }
+        </div>
+    </div>
+
+    <div class="product-details-image-wrap">
+        <img src="@Slika" alt="@Model.Naziv" class="product-details-image" />
+    </div>
+</section>

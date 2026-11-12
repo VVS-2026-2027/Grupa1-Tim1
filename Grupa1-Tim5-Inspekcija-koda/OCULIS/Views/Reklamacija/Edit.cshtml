@@ -1,0 +1,20 @@
+@model OCULIS.Models.Reklamacija
+@{ ViewData["Title"] = "Obrada reklamacije"; }
+
+<h1 class="page-title">Obrada reklamacije</h1>
+<div class="filter-card col-lg-8">
+    <p><strong>Opis:</strong> @Model.Opis</p>
+    <form asp-action="Edit">
+        <input type="hidden" asp-for="Id" />
+        <div class="mb-3">
+            <label asp-for="Status" class="form-label"></label>
+            <select asp-for="Status" class="form-select" asp-items="Html.GetEnumSelectList<OCULIS.Models.StatusReklamacije>()"></select>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Odgovor" class="form-label"></label>
+            <textarea asp-for="Odgovor" class="form-control" rows="4"></textarea>
+        </div>
+        <button type="submit" class="btn btn-oculis">Spremi</button>
+        <a asp-action="Index" class="btn btn-secondary">Nazad</a>
+    </form>
+</div>

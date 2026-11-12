@@ -1,0 +1,61 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Prijava";
+}
+
+<div class="auth-page">
+    <div class="auth-card">
+        <h1>Prijava</h1>
+        <p class="auth-subtitle">Dobrodošli nazad!</p>
+
+        <form id="account" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+            <div class="auth-field">
+                <label asp-for="Input.Email">Email adresa</label>
+                <input asp-for="Input.Email"
+                       class="auth-input"
+                       autocomplete="username"
+                       aria-required="true"
+                       placeholder="Email" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="auth-field">
+                <label asp-for="Input.Password">Lozinka</label>
+                <input asp-for="Input.Password"
+                       class="auth-input"
+                       autocomplete="current-password"
+                       aria-required="true"
+                       placeholder="Lozinka" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <div class="auth-line">
+                <label asp-for="Input.RememberMe" class="auth-remember">
+                    <input asp-for="Input.RememberMe" />
+                    Zapamti me
+                </label>
+
+                <a id="forgot-password" asp-page="./ForgotPassword">
+                    Zaboravili ste lozinku?
+                </a>
+            </div>
+
+            <button id="login-submit" type="submit" class="auth-btn">
+                PRIJAVI SE
+            </button>
+
+            <p class="auth-bottom-text">
+                Nemate nalog?
+                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registrujte se</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

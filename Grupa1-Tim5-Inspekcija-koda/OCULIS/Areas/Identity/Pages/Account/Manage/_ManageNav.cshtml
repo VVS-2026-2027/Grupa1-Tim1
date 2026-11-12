@@ -1,0 +1,31 @@
+@inject SignInManager<OCULIS.Models.Korisnik> SignInManager
+
+<ul class="account-nav">
+    <li>
+        <a class="@ManageNavPages.IndexNavClass(ViewContext)" asp-page="./Index">
+            <i class="fa-regular fa-user"></i>
+            Profil
+        </a>
+    </li>
+
+    <li>
+        <a class="@ManageNavPages.EmailNavClass(ViewContext)" asp-page="./Email">
+            <i class="fa-regular fa-envelope"></i>
+            Email adresa
+        </a>
+    </li>
+
+    <li>
+        <a class="@ManageNavPages.ChangePasswordNavClass(ViewContext)" asp-page="./ChangePassword">
+            <i class="fa-solid fa-lock"></i>
+            Lozinka
+        </a>
+    </li>
+
+    <li>
+        <a class="@ManageNavPages.PersonalDataNavClass(ViewContext)" asp-page="./PersonalData">
+            <i class="fa-regular fa-folder-open"></i>
+            Lični podaci
+        </a>
+    </li>
+</ul>

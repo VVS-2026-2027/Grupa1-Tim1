@@ -1,0 +1,40 @@
+@model OCULIS.Models.Narudzba
+
+@{
+    ViewData["Title"] = "Podaci za narudžbu";
+}
+
+<h1>Podaci za narudžbu</h1>
+
+<p>Unesite adresu na koju želite da narudžba bude isporučena.</p>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="AdresaIsporuke" class="control-label"></label>
+                <input asp-for="AdresaIsporuke"
+                       class="form-control"
+                       placeholder="npr. Zmaja od Bosne 8" />
+                <span asp-validation-for="AdresaIsporuke" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Potvrdi narudžbu" class="btn btn-primary" />
+                <a asp-controller="Korpa" asp-action="Index" class="btn btn-secondary">
+                    Nazad na korpu
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

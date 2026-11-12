@@ -1,0 +1,49 @@
+@model OCULIS.Models.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h1 class="page-title"><i class="fa-solid fa-chart-line me-2"></i>Administratorski dashboard</h1>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-3"><div class="stat-card"><h4>@Model.UkupnoProizvoda</h4><span class="text-muted">Proizvoda</span></div></div>
+    <div class="col-md-3"><div class="stat-card"><h4>@Model.UkupnoNarudzbi</h4><span class="text-muted">Narudžbi</span></div></div>
+    <div class="col-md-3"><div class="stat-card"><h4>@Model.UkupnoTermina</h4><span class="text-muted">Termina</span></div></div>
+    <div class="col-md-3"><div class="stat-card"><h4>@Model.UkupniPrihod.ToString("F2") KM</h4><span class="text-muted">Prihod</span></div></div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="filter-card">
+            <h5>Nedavne narudžbe</h5>
+            <table class="table table-hover mb-0">
+                <thead><tr><th>#</th><th>Korisnik</th><th>Iznos</th><th>Status</th><th>Datum</th></tr></thead>
+                <tbody>
+                @foreach (var n in Model.NedavneNarudzbe)
+                {
+                    <tr>
+                        <td>@n.Id</td>
+                        <td>@n.Korisnik</td>
+                        <td>@n.Iznos.ToString("F2") KM</td>
+                        <td><span class="badge bg-info">@n.Status</span></td>
+                        <td>@n.Datum.ToString("dd.MM.yyyy")</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="filter-card">
+            <h5>Narudžbe po statusu</h5>
+            <ul class="list-group list-group-flush">
+                @foreach (var s in Model.NarudzbePoStatusu)
+                {
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>@s.Key</span><strong>@s.Value</strong>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+﻿@page
+@model EmailModel
+
+@{
+    ViewData["Title"] = "Email adresa";
+    ViewData["ActivePage"] = ManageNavPages.Email;
+}
+
+<h2>Email adresa</h2>
+
+
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<form id="email-form" method="post">
+    <div asp-validation-summary="All" class="text-danger mb-3" role="alert"></div>
+
+    <div class="account-form-group">
+        <label asp-for="Email">Trenutni e-mail</label>
+        <input asp-for="Email" class="form-control account-input" disabled />
+    </div>
+
+    @if (!Model.IsEmailConfirmed)
+    {
+        <button id="email-verification"
+                type="submit"
+                asp-page-handler="SendVerificationEmail"
+                class="account-link-btn">
+            Pošalji e-mail za verifikaciju
+        </button>
+    }
+
+    <div class="account-form-group mt-3">
+        <label asp-for="Input.NewEmail">Novi e-mail</label>
+        <input asp-for="Input.NewEmail"
+               class="form-control account-input"
+               placeholder="Unesite novu e-mail adresu" />
+        <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
+    </div>
+
+    <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="btn account-save-btn">
+        Promijeni e-mail
+    </button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,15 @@
+@model OCULIS.Models.Narudzba
+@{ ViewData["Title"] = "Uredi status narudžbe"; }
+
+<h1 class="page-title">Uredi status narudžbe #@Model.Id</h1>
+<div class="filter-card col-lg-6">
+    <form asp-action="Edit">
+        <input type="hidden" asp-for="Id" />
+        <div class="mb-3">
+            <label asp-for="Status" class="form-label"></label>
+            <select asp-for="Status" class="form-select" asp-items="Html.GetEnumSelectList<OCULIS.Models.StatusNarudzbe>()"></select>
+        </div>
+        <button type="submit" class="btn btn-oculis">Spremi</button>
+        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-secondary">Nazad</a>
+    </form>
+</div>
