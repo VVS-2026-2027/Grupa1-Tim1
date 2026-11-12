@@ -1,0 +1,23 @@
+@model OCULIS.Models.Korisnik
+@{ ViewData["Title"] = "Novi korisnik"; }
+
+<h1 class="page-title">Novi korisnik</h1>
+<div class="filter-card col-lg-8">
+    <form asp-action="Create">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-6 mb-3"><label asp-for="Ime" class="form-label"></label><input asp-for="Ime" class="form-control" /></div>
+            <div class="col-md-6 mb-3"><label asp-for="Prezime" class="form-label"></label><input asp-for="Prezime" class="form-control" /></div>
+        </div>
+        <div class="mb-3"><label asp-for="Email" class="form-label"></label><input asp-for="Email" class="form-control" /></div>
+        <div class="mb-3"><label asp-for="Telefon" class="form-label"></label><input asp-for="Telefon" class="form-control" /></div>
+        <div class="mb-3"><label class="form-label">Lozinka</label><input type="password" name="password" class="form-control" required /></div>
+        <div class="mb-3">
+            <label class="form-label">Uloga</label>
+            <select name="uloga" class="form-select">
+                @foreach (var u in OCULIS.Constants.Uloge.Sve) { <option value="@u">@u</option> }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-oculis">Kreiraj</button>
+    </form>
+</div>

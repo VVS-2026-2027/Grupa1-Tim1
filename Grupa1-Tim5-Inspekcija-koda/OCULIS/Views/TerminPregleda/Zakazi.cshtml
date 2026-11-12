@@ -1,0 +1,93 @@
+@model OCULIS.Models.ViewModels.TerminZakazivanjeViewModel
+
+@{
+    ViewData["Title"] = "Zakaži pregled";
+}
+
+<div class="zakazi-page">
+    <div class="filter-card zakazi-card">
+
+        <div class="reservation-header">
+            <span>OCULIS REZERVACIJA</span>
+            <h2>REZERVACIJA TERMINA</h2>
+            <p>Odaberite poslovnicu, datum i željeni termin pregleda vida.</p>
+        </div>
+
+        <form asp-action="Zakazi" id="terminForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="IdPoslovnica" class="form-label"></label>
+                <select asp-for="IdPoslovnica"
+                        class="form-select"
+                        asp-items="ViewBag.IdPoslovnica"
+                        id="poslovnica">
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Datum" class="form-label"></label>
+                <input asp-for="Datum" type="date" class="form-control" id="datum" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Dostupni termini</label>
+
+                <div id="slotovi" class="d-flex flex-wrap gap-2">
+                    @foreach (var slot in Model.DostupniTermini)
+                    {
+                        <button type="button"
+                                class="btn btn-outline-primary btn-sm slot-btn"
+                                data-time="@slot.ToString(@"hh\:mm")">
+                            @slot.ToString(@"hh\:mm")
+                        </button>
+                    }
+                </div>
+
+                <input type="hidden" asp-for="Vrijeme" id="vrijeme" />
+                <span asp-validation-for="Vrijeme" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex justify-content-center gap-2 flex-wrap mt-4">
+                <button type="submit" class="btn btn-oculis">
+                    Potvrdi termin
+                </button>
+
+                <a asp-action="Index" class="btn btn-secondary">
+                    Moji termini
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function ucitajSlotove() {
+            var poslovnicaId = $('#poslovnica').val();
+            var datum = $('#datum').val();
+
+            if (!poslovnicaId || !datum) return;
+
+            $.get('@Url.Action("DostupniTermini")', { poslovnicaId, datum }, function(data) {
+                var html = '';
+
+                data.forEach(function(t) {
+                    html += '<button type="button" class="btn btn-outline-primary btn-sm slot-btn" data-time="' + t + '">' + t + '</button>';
+                });
+
+                $('#slotovi').html(html || '<span class="text-muted">Nema dostupnih termina.</span>');
+            });
+        }
+
+        $('#poslovnica, #datum').on('change', ucitajSlotove);
+
+        $(document).on('click', '.slot-btn', function() {
+            $('.slot-btn').removeClass('active');
+            $(this).addClass('active');
+            $('#vrijeme').val($(this).data('time') + ':00');
+        });
+    </script>
+}

@@ -1,0 +1,26 @@
+@model IEnumerable<OCULIS.Models.Korisnik>
+@{ ViewData["Title"] = "Korisnici"; var uloge = ViewBag.Uloge as Dictionary<string, IList<string>>; }
+
+<h1 class="page-title"><i class="fa-solid fa-users me-2"></i>Korisnici</h1>
+<a asp-action="Create" class="btn btn-oculis mb-3">Novi korisnik</a>
+<div class="table-oculis">
+    <table class="table table-hover mb-0">
+        <thead class="table-light"><tr><th>Ime</th><th>Email</th><th>Uloga</th><th>Narudžbe</th><th>Bodovi</th><th></th></tr></thead>
+        <tbody>
+        @foreach (var k in Model)
+        {
+            <tr>
+                <td>@k.Ime @k.Prezime</td>
+                <td>@k.Email</td>
+                <td>@(uloge != null && uloge.ContainsKey(k.Id) ? string.Join(", ", uloge[k.Id]) : "")</td>
+                <td>@k.BrojNarudzbi</td>
+                <td>@k.LojalnostBodovi</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@k.Id" class="btn btn-sm btn-outline-primary">Detalji</a>
+                    <a asp-action="Edit" asp-route-id="@k.Id" class="btn btn-sm btn-outline-secondary">Uredi</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

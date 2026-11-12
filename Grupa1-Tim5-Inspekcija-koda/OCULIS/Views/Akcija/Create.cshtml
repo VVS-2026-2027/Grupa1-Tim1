@@ -1,0 +1,17 @@
+@model OCULIS.Models.Akcija
+@{ ViewData["Title"] = "Nova akcija"; }
+
+<h1 class="page-title">Nova akcija</h1>
+<div class="filter-card col-lg-8">
+    <form asp-action="Create">
+        <div class="mb-3"><label asp-for="Naziv" class="form-label"></label><input asp-for="Naziv" class="form-control" /></div>
+        <div class="mb-3"><label asp-for="PopustPostotak" class="form-label"></label><input asp-for="PopustPostotak" class="form-control" /></div>
+        <div class="row">
+            <div class="col-md-6 mb-3"><label asp-for="DatumPocetka" class="form-label"></label><input asp-for="DatumPocetka" type="date" class="form-control" /></div>
+            <div class="col-md-6 mb-3"><label asp-for="DatumZavrsetka" class="form-label"></label><input asp-for="DatumZavrsetka" type="date" class="form-control" /></div>
+        </div>
+        <div class="mb-3"><label asp-for="IdProizvod" class="form-label">Proizvod (prazno = svi)</label><select asp-for="IdProizvod" class="form-select" asp-items="ViewBag.IdProizvod"><option value="">Svi proizvodi</option></select></div>
+        <div class="form-check mb-3"><input asp-for="Aktivna" class="form-check-input" /><label asp-for="Aktivna" class="form-check-label"></label></div>
+        <button type="submit" class="btn btn-oculis">Spremi</button>
+    </form>
+</div>

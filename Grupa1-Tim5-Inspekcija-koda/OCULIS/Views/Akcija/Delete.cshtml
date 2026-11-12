@@ -1,0 +1,10 @@
+@model OCULIS.Models.Akcija
+@{ ViewData["Title"] = "Obriši akciju"; }
+
+<h1 class="page-title">Obriši akciju</h1>
+<div class="alert alert-warning">Jeste li sigurni da želite obrisati akciju <strong>@Model.Naziv</strong>?</div>
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Obriši</button>
+    <a asp-action="Index" class="btn btn-secondary">Nazad</a>
+</form>

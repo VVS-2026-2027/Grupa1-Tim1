@@ -1,0 +1,23 @@
+@{
+    ViewData["Title"] = "Pošalji obavijest";
+}
+
+<h1 class="page-title">Pošalji obavijest</h1>
+<div class="filter-card col-lg-8">
+    <form asp-action="Create">
+        <div class="mb-3">
+            <label class="form-label">Email korisnika</label>
+            <input type="email" name="emailKorisnika" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Naslov</label>
+            <input type="text" name="naslov" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Tekst</label>
+            <textarea name="tekst" class="form-control" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-oculis">Pošalji</button>
+        <a asp-action="Index" class="btn btn-secondary">Nazad</a>
+    </form>
+</div>

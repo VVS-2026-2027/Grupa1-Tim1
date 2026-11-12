@@ -1,0 +1,27 @@
+﻿@page
+@model GenerateRecoveryCodesModel
+@{
+    ViewData["Title"] = "Generisanje kodova za oporavak (2FA)";
+    ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+<h3>@ViewData["Title"]</h3>
+<div class="alert alert-warning" role="alert">
+    <p>
+        <span class="glyphicon glyphicon-warning-sign"></span>
+        <strong>Čuvajte ove kodove na sigurnom mjestu.</strong>
+    </p>
+    <p>
+        Ako izgubite uređaj i nemate kodove za oporavak, izgubit ćete pristup svom računu.
+    </p>
+    <p>
+        Generisanje novih kodova za oporavak ne mijenja ključeve u aplikacijama za autentifikaciju. Ako želite promijeniti ključ,
+        trebate <a asp-page="./ResetAuthenticator">resetovati ključeve autentifikatora.</a>
+    </p>
+</div>
+<div>
+    <form method="post">
+        <button class="btn btn-danger" type="submit">Generiši kodove za oporavak</button>
+    </form>
+</div>

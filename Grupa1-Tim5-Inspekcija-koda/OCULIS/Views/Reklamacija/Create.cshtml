@@ -1,0 +1,55 @@
+@model OCULIS.Models.Reklamacija
+
+@{
+    ViewData["Title"] = "Podnesi reklamaciju";
+}
+
+<section class="complaint-page">
+    <div class="complaint-header">
+        <span>OCULIS PODRŠKA</span>
+        <h1>Podnesi reklamaciju</h1>
+        <p>
+            Opišite problem koji imate s narudžbom ili proizvodom.
+            Naš tim će pregledati zahtjev i kontaktirati vas u najkraćem mogućem roku.
+        </p>
+    </div>
+
+    <div class="complaint-card">
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="complaint-form-group">
+                <label asp-for="IdNarudzba">Narudžba</label>
+                <select asp-for="IdNarudzba" class="form-select complaint-input" asp-items="ViewBag.IdNarudzba">
+                    <option value="">Bez narudžbe</option>
+                </select>
+                <small>Ovo polje nije obavezno. Reklamaciju možete poslati i bez odabrane narudžbe.</small>
+            </div>
+
+            <div class="complaint-form-group">
+                <label asp-for="Opis">Opis reklamacije</label>
+                <textarea asp-for="Opis"
+                          class="form-control complaint-input complaint-textarea"
+                          rows="6"
+                          placeholder="Ukratko opišite problem, proizvod, datum kupovine ili razlog reklamacije..."></textarea>
+                <span asp-validation-for="Opis" class="text-danger"></span>
+            </div>
+
+            <div class="complaint-actions">
+                <button type="submit" class="btn complaint-primary-btn">
+                    Podnesi reklamaciju
+                </button>
+
+                <a asp-action="Index" class="btn complaint-secondary-btn">
+                    Nazad
+                </a>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

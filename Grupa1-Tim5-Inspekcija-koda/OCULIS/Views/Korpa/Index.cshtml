@@ -1,0 +1,110 @@
+@model OCULIS.Models.ViewModels.KorpaViewModel
+
+@{
+    ViewData["Title"] = "Korpa";
+}
+
+@if (Model.Stavke.Any())
+{
+    <section class="cart-page">
+        <div class="cart-header">
+            <span>OCULIS KUPOVINA</span>
+            <h1>Vaša korpa</h1>
+        </div>
+
+        <div class="cart-layout">
+            <div class="cart-items">
+                @foreach (var s in Model.Stavke)
+                {
+                    <div class="cart-item-card">
+                        <div class="cart-item-info">
+                            <h4>@s.NazivProizvoda</h4>
+                            <p>Količina: @s.Kolicina</p>
+                            <strong>@s.Cijena.ToString("F2") KM</strong>
+                        </div>
+
+                        <div class="cart-item-total">
+                            <span>Ukupno</span>
+                            <strong>@s.Ukupno.ToString("F2") KM</strong>
+
+                            <form asp-action="Ukloni" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="stavkaId" value="@s.Id" />
+                                <button class="cart-remove-btn">
+                                    <i class="fa-solid fa-trash"></i>
+                                    Ukloni
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <aside class="cart-summary">
+                <h3>Pregled narudžbe</h3>
+
+                @if (Model.Popust != null)
+                {
+                    <div class="summary-row">
+                        <span>Osnovna cijena</span>
+                        <strong>@Model.Popust.OsnovnaCijena.ToString("F2") KM</strong>
+                    </div>
+
+                    @foreach (var p in Model.Popust.PrimijenjeniPopusti)
+                    {
+                        <div class="summary-badge">@p</div>
+                    }
+
+                    <div class="summary-row discount">
+                        <span>Popust</span>
+                        <strong>-@Model.Popust.PopustIznos.ToString("F2") KM</strong>
+                    </div>
+
+                    <hr />
+
+                    <div class="summary-total">
+                        <span>Ukupno</span>
+                        <strong>@Model.Popust.UkupnaCijena.ToString("F2") KM</strong>
+                    </div>
+                }
+                else
+                {
+                    <div class="summary-total">
+                        <span>Ukupno</span>
+                        <strong>@Model.UkupnaCijena.ToString("F2") KM</strong>
+                    </div>
+                }
+
+                <a asp-action="Checkout" class="cart-checkout-btn">
+                    <i class="fa-solid fa-lock me-2"></i>
+                    Nastavi narudžbu
+                </a>
+
+                <a asp-controller="Proizvod" asp-action="Index" class="cart-continue-link">
+                    Nastavi kupovinu
+                </a>
+            </aside>
+        </div>
+    </section>
+}
+else
+{
+    <section class="empty-cart-section">
+        <div class="empty-cart-card">
+            <div class="empty-cart-icon">
+                <i class="fa-solid fa-cart-shopping"></i>
+            </div>
+
+            <h1>Korpa je prazna</h1>
+
+            <p>
+                Trenutno nema proizvoda u tvojoj korpi.
+                Pregledaj našu kolekciju i pronađi savršene naočale za sebe.
+            </p>
+
+            <a asp-controller="Proizvod" asp-action="Index" class="btn btn-oculis btn-lg">
+                Pregledaj proizvode
+            </a>
+        </div>
+    </section>
+}

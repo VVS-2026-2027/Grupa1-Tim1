@@ -1,0 +1,104 @@
+@model OCULIS.Models.ViewModels.NarudzbaCheckoutViewModel
+
+@{
+    ViewData["Title"] = "Potvrda narudžbe";
+}
+
+<section class="checkout-page">
+    <div class="checkout-header">
+        <span>OCULIS KUPOVINA</span>
+        <h1>Potvrda narudžbe</h1>
+    </div>
+
+    <div class="checkout-layout">
+        <div class="checkout-card">
+            <h3>Stavke narudžbe</h3>
+
+            @foreach (var s in Model.Korpa.Stavke)
+            {
+                <div class="checkout-item">
+                    <div>
+                        <strong>@s.NazivProizvoda</strong>
+                        <span>Količina: @s.Kolicina</span>
+                    </div>
+
+                    <p>@s.Ukupno.ToString("F2") KM</p>
+                </div>
+            }
+
+            <div class="checkout-summary-line">
+                <span>Osnovna cijena</span>
+                <strong>@Model.Popust.OsnovnaCijena.ToString("F2") KM</strong>
+            </div>
+
+            <div class="checkout-summary-line discount">
+                <span>Popust @Model.Popust.PopustPostotak%</span>
+                <strong>-@Model.Popust.PopustIznos.ToString("F2") KM</strong>
+            </div>
+
+            <div class="checkout-total">
+                <span>Ukupno</span>
+                <strong>@Model.Popust.UkupnaCijena.ToString("F2") KM</strong>
+            </div>
+        </div>
+
+        <div class="checkout-card checkout-confirm-card">
+            <h3>Podaci za isporuku</h3>
+
+            <form asp-controller="Narudzba" asp-action="Kreiraj" method="post">
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <input type="hidden" asp-for="KorpaId" />
+
+                <div class="mb-3">
+                    <label asp-for="AdresaIsporuke" class="form-label"></label>
+                    <input asp-for="AdresaIsporuke"
+                           class="form-control payment-input"
+                           placeholder="npr. Zmaja od Bosne 8 ili Ferhadija bb" />
+                    <span asp-validation-for="AdresaIsporuke" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Grad" class="form-label"></label>
+                        <input asp-for="Grad"
+                               class="form-control payment-input"
+                               placeholder="npr. Sarajevo" />
+                        <span asp-validation-for="Grad" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="PostanskiBroj" class="form-label"></label>
+                        <input asp-for="PostanskiBroj"
+                               class="form-control payment-input"
+                               placeholder="npr. 71000" />
+                        <span asp-validation-for="PostanskiBroj" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Telefon" class="form-label"></label>
+                    <input asp-for="Telefon"
+                           class="form-control payment-input"
+                           placeholder="061 234 567" />
+                    <small class="text-muted">Format: 061 234 567</small>
+                    <span asp-validation-for="Telefon" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="checkout-confirm-btn">
+                    Potvrdi narudžbu
+                </button>
+            </form>
+
+            <a asp-controller="Korpa" asp-action="Index" class="checkout-back-link">
+                Nazad na korpu
+            </a>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

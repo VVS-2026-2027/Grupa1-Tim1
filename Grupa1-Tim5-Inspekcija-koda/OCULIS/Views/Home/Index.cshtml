@@ -1,0 +1,223 @@
+﻿@{
+    ViewData["Title"] = "Početna";
+    var proizvodi = ViewBag.IstaknutiProizvodi as IEnumerable<OCULIS.Models.Proizvod>;
+
+    string SlikaZaProizvod(OCULIS.Models.Proizvod p)
+    {
+        var naziv = (p.Naziv ?? "").ToLower();
+        var proizvodjac = (p.Proizvodjac ?? "").ToLower();
+        var kategorija = p.Kategorija.ToString();
+
+        if (kategorija == "KontaktnaSociva")
+        {
+            return "/images/products/contact-lenses.png";
+        }
+
+        if (kategorija == "DodatnaOprema")
+        {
+            return "/images/products/cleaning-kit.png";
+        }
+        if (kategorija == "SuncaneNaocale")
+        {
+            if (naziv.Contains("ray") || naziv.Contains("aviator") || proizvodjac.Contains("ray"))
+                return "/images/products/product5.png";
+
+            if (naziv.Contains("oakley") || naziv.Contains("holbrook") || proizvodjac.Contains("oakley"))
+                return "/images/products/product3.png";
+
+            return "/images/products/product3.png";
+        }
+        if (kategorija == "DioptrijskeNaocale")
+        {
+            if (naziv.Contains("vogue") || proizvodjac.Contains("vogue"))
+                return "/images/products/product4.png";
+
+            if (naziv.Contains("essilor") || naziv.Contains("varilux") || proizvodjac.Contains("essilor"))
+                return "/images/products/product2.png";
+
+            return "/images/products/product1.png";
+        }
+
+        return "/images/products/product1.png";
+    }
+}
+
+<section class="luxury-hero">
+    <div class="luxury-hero-image">
+        <img src="/images/hero/hero-luxury.png" alt="Luxury naočale" />
+    </div>
+
+    <div class="luxury-hero-content">
+        <span class="luxury-hero-note">SINCE 1985</span>
+
+        <h1 class="luxury-brand-title">OCULIS</h1>
+
+        <p class="luxury-hero-subtext">
+            Ekskluzivna kolekcija naočala vodećih svjetskih brendova.
+            Gdje se stil susreće sa savršenstvom.
+        </p>
+
+        <div class="luxury-actions">
+            <a href="/Proizvod" class="btn btn-luxury-primary">PREGLEDAJ KOLEKCIJU</a>
+
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a asp-controller="TerminPregleda"
+                   asp-action="Zakazi"
+                   class="btn btn-luxury-secondary">
+                    ZAKAŽI PREGLED
+                </a>
+            }
+            else
+            {
+                <a asp-area="Identity"
+                   asp-page="/Account/Login"
+                   asp-route-returnUrl="@Url.Action("Zakazi", "TerminPregleda")"
+                   class="btn btn-luxury-secondary">
+                    ZAKAŽI PREGLED
+                </a>
+            }
+        </div>
+    </div>
+</section>
+<section class="oculis-features">
+    <div class="oculis-feature">
+        <div class="oculis-feature-icon">
+            <i class="fa-regular fa-eye"></i>
+        </div>
+
+        <h3>Profesionalni pregled vida</h3>
+
+        <p>
+            Najsavremenija oprema i stručno osoblje za preciznu dijagnostiku.
+        </p>
+    </div>
+
+    <div class="oculis-feature">
+        <div class="oculis-feature-icon">
+            <i class="fa-solid fa-award"></i>
+        </div>
+
+        <h3>Premium brendovi</h3>
+
+        <p>
+            Ekskluzivna kolekcija vodećih svjetskih proizvođača naočala.
+        </p>
+    </div>
+
+    <div class="oculis-feature">
+        <div class="oculis-feature-icon">
+            <i class="fa-solid fa-bag-shopping"></i>
+        </div>
+
+        <h3>Online kupovina</h3>
+
+        <p>
+            Jednostavna narudžba i brza isporuka direktno na vašu adresu.
+        </p>
+    </div>
+</section>
+<section class="exam-cta-section">
+    <div class="exam-cta-content">
+        <span>Besplatno za naše korisnike</span>
+
+        <h2>Zakažite pregled vida</h2>
+
+        <p>
+            Brzo i jednostavno rezervišite termin pregleda vida u najbližoj OCULIS poslovnici.
+            Odaberite datum, vrijeme i poslovnicu koja vam najviše odgovara.
+        </p>
+
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <a asp-controller="TerminPregleda" asp-action="Zakazi" class="exam-cta-btn">
+                Zakaži besplatan pregled
+            </a>
+        }
+        else
+        {
+            <a asp-area="Identity"
+                   asp-page="/Account/Login"
+                   asp-route-returnUrl="@Url.Action("Zakazi", "TerminPregleda")"
+                   class="exam-cta-btn">
+                Zakaži besplatan pregled
+            </a>
+        }
+    </div>
+
+    <div class="exam-cta-icon">
+        <i class="fa-regular fa-eye"></i>
+    </div>
+</section>
+
+@{
+    var akcije = ViewBag.AktivneAkcije as IEnumerable<OCULIS.Models.Akcija>;
+}
+
+@if (akcije != null && akcije.Any())
+{
+    <section class="discount-banner-section">
+        <div class="discount-header">
+            <h2>Trenutni popusti</h2>
+        </div>
+
+        <div class="discount-banner-grid">
+            @foreach (var akcija in akcije)
+            {
+                <div class="discount-banner-card">
+                    <span class="discount-percent">-@akcija.PopustPostotak%</span>
+
+                    <h3>@akcija.Naziv</h3>
+
+                    <p>
+                        Važi do @akcija.DatumZavrsetka.ToString("dd.MM.yyyy")
+                    </p>
+
+                    <strong>
+                        @(akcija.Proizvod != null ? akcija.Proizvod.Naziv : "Odabrani proizvodi")
+                    </strong>
+
+                    <a asp-controller="Proizvod" asp-action="Index">
+                        Pogledaj kolekciju
+                    </a>
+                </div>
+            }
+        </div>
+    </section>
+}
+
+
+<div class="luxury-section-header">
+    <h2>Izdvojeni proizvodi</h2>
+    <a href="/Proizvod">
+        Pogledaj sve proizvode <i class="fa-solid fa-arrow-right ms-2"></i>
+    </a>
+</div>
+
+<div class="row g-4">
+    @foreach (var p in proizvodi ?? Enumerable.Empty<OCULIS.Models.Proizvod>())
+    {
+        var slika = SlikaZaProizvod(p);
+
+        <div class="col-md-6 col-lg-3">
+            <div class="luxury-product-card">
+                <div class="luxury-product-image">
+                    <img src="@slika" alt="@p.Naziv" />
+                </div>
+
+                <div class="luxury-product-body">
+                    <h5>@p.Naziv</h5>
+                    <p>@p.Proizvodjac</p>
+
+                    <div class="luxury-product-footer">
+                        <span>@p.Cijena.ToString("F2") KM</span>
+                        <a href="/Proizvod/Details/@p.Id">
+                            Detalji
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

@@ -1,0 +1,76 @@
+﻿@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Registracija";
+}
+
+<div class="auth-page">
+    <div class="auth-card">
+        <h1>Registracija</h1>
+        <p class="auth-subtitle">Kreirajte novi nalog.</p>
+
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+            <div class="auth-field">
+                <label asp-for="Input.Ime">Ime</label>
+                <input asp-for="Input.Ime"
+                       class="auth-input"
+                       placeholder="Ime" />
+                <span asp-validation-for="Input.Ime" class="text-danger"></span>
+            </div>
+
+            <div class="auth-field">
+                <label asp-for="Input.Prezime">Prezime</label>
+                <input asp-for="Input.Prezime"
+                       class="auth-input"
+                       placeholder="Prezime" />
+                <span asp-validation-for="Input.Prezime" class="text-danger"></span>
+            </div>
+
+            <div class="auth-field">
+                <label asp-for="Input.Email">Email adresa</label>
+                <input asp-for="Input.Email"
+                       class="auth-input"
+                       autocomplete="username"
+                       aria-required="true"
+                       placeholder="Email" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="auth-field">
+                <label asp-for="Input.Password">Lozinka</label>
+                <input asp-for="Input.Password"
+                       class="auth-input"
+                       autocomplete="new-password"
+                       aria-required="true"
+                       placeholder="Lozinka" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <div class="auth-field">
+                <label asp-for="Input.ConfirmPassword">Potvrdi lozinku</label>
+                <input asp-for="Input.ConfirmPassword"
+                       class="auth-input"
+                       autocomplete="new-password"
+                       aria-required="true"
+                       placeholder="Potvrdi lozinku" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <button id="registerSubmit" type="submit" class="auth-btn">
+                REGISTRUJ SE
+            </button>
+
+            <p class="auth-bottom-text">
+                Već imate nalog?
+                <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Prijavite se</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

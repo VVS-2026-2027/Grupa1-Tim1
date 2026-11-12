@@ -1,0 +1,217 @@
+@model OCULIS.Models.ViewModels.ElektronskiKartonDetaljiViewModel
+
+@{
+    ViewData["Title"] = "Elektronski karton";
+}
+
+<h1 class="page-title">
+    <i class="fa-solid fa-folder-open me-2"></i>Elektronski karton
+</h1>
+
+<div class="filter-card mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-3">
+            <i class="fa-solid fa-user-doctor fa-2x" style="color:#b48742;"></i>
+
+            <div>
+                <h3 class="mb-1">
+                    @Model.Karton.Korisnik?.Ime @Model.Karton.Korisnik?.Prezime
+                </h3>
+
+                <p class="text-muted mb-0">
+                    Kreiran: @Model.Karton.DatumKreiranja.ToString("dd.MM.yyyy")
+                </p>
+            </div>
+        </div>
+
+        @if (User.IsInRole("Zaposlenik") || User.IsInRole("Administrator"))
+        {
+            <a asp-controller="PregledVida"
+                   asp-action="Create"
+                   asp-route-kartonId="@Model.Karton.Id"
+                   class="btn btn-oculis">
+                <i class="fa-solid fa-plus me-1"></i>
+                Dodaj pregled
+            </a>
+        }
+    </div>
+
+    <hr />
+
+    <p class="mb-0">
+        @(string.IsNullOrWhiteSpace(Model.Karton.Napomena)
+            ? "Elektronski karton sadrži historiju pregleda vida, dioptriju, preporuke stručnog lica, narudžbe i reklamacije korisnika."
+            : Model.Karton.Napomena)
+    </p>
+</div>
+
+<ul class="nav nav-tabs oculis-tabs mb-3" role="tablist">
+    <li class="nav-item">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pregledi" type="button">
+            Pregledi (@Model.Pregledi.Count)
+        </button>
+    </li>
+
+    <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#dioptrija" type="button">
+            Dioptrija
+        </button>
+    </li>
+
+    <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#preporuke" type="button">
+            Preporuke
+        </button>
+    </li>
+
+    <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#narudzbe" type="button">
+            Narudžbe (@Model.Narudzbe.Count)
+        </button>
+    </li>
+
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="pregledi">
+        @if (Model.Pregledi.Any())
+        {
+            @foreach (var p in Model.Pregledi)
+            {
+                <div class="filter-card mb-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            Pregled vida - @p.DatumPregleda.ToString("dd.MM.yyyy")
+                        </h5>
+
+                        <span class="badge bg-success">
+                            Evidentiran
+                        </span>
+                    </div>
+
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="mb-1">
+                                <strong>Lijevo oko:</strong> @p.DioptrijaLijevo
+                            </p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p class="mb-1">
+                                <strong>Desno oko:</strong> @p.DioptrijaDesno
+                            </p>
+                        </div>
+                    </div>
+
+                    <p class="text-muted mb-0 mt-2">
+                        <strong>Preporuka:</strong> @p.Preporuka
+                    </p>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="filter-card">
+                <p class="text-muted mb-0">
+                    <i class="fa-solid fa-circle-info me-2"></i>
+                    Nema evidentiranih pregleda vida.
+                </p>
+            </div>
+        }
+    </div>
+
+    <div class="tab-pane fade" id="dioptrija">
+        @if (Model.Pregledi.Any())
+        {
+            var zadnjiPregled = Model.Pregledi.OrderByDescending(p => p.DatumPregleda).First();
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="filter-card">
+                        <h5>Lijevo oko</h5>
+                        <p class="fs-4 fw-bold mb-0">@zadnjiPregled.DioptrijaLijevo</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="filter-card">
+                        <h5>Desno oko</h5>
+                        <p class="fs-4 fw-bold mb-0">@zadnjiPregled.DioptrijaDesno</p>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="filter-card">
+                <p class="text-muted mb-0">
+                    <i class="fa-solid fa-circle-info me-2"></i>
+                    Nema evidentirane dioptrije.
+                </p>
+            </div>
+        }
+    </div>
+
+    <div class="tab-pane fade" id="preporuke">
+        @if (Model.Pregledi.Any(p => !string.IsNullOrWhiteSpace(p.Preporuka)))
+        {
+            @foreach (var p in Model.Pregledi.Where(p => !string.IsNullOrWhiteSpace(p.Preporuka)).OrderByDescending(p => p.DatumPregleda))
+            {
+                <div class="filter-card mb-3">
+                    <h5>Preporuka stručnog lica</h5>
+                    <p class="text-muted mb-2">
+                        Datum pregleda: @p.DatumPregleda.ToString("dd.MM.yyyy")
+                    </p>
+                    <p class="mb-0">@p.Preporuka</p>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="filter-card">
+                <p class="text-muted mb-0">
+                    <i class="fa-solid fa-circle-info me-2"></i>
+                    Nema evidentiranih preporuka.
+                </p>
+            </div>
+        }
+    </div>
+
+    <div class="tab-pane fade" id="narudzbe">
+        @if (Model.Narudzbe.Any())
+        {
+            @foreach (var n in Model.Narudzbe)
+            {
+                <div class="filter-card mb-3 d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-1">Narudžba #@n.Id</h5>
+                        <p class="text-muted mb-0">@n.DatumNarudzbe.ToString("dd.MM.yyyy")</p>
+                    </div>
+
+                    <span class="badge bg-info">@n.Status</span>
+
+                    <strong>@n.UkupnaCijena.ToString("F2") KM</strong>
+
+                    <a asp-controller="Narudzba"
+                           asp-action="Details"
+                           asp-route-id="@n.Id"
+                           class="btn btn-sm btn-outline-secondary">
+                        Detalji
+                    </a>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="filter-card">
+                <p class="text-muted mb-0">
+                    <i class="fa-solid fa-circle-info me-2"></i>
+                    Nema evidentiranih narudžbi.
+                </p>
+            </div>
+        }
+    </div>
+
+</div>

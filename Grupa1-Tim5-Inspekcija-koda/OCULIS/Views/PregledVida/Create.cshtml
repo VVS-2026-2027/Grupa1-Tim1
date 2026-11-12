@@ -1,0 +1,92 @@
+@model OCULIS.Models.PregledVida
+
+@{
+    ViewData["Title"] = "Novi pregled vida";
+}
+
+<section class="eye-exam-page">
+    <div class="eye-exam-header">
+        <span>OCULIS KARTON</span>
+        <h1>Evidentiraj pregled vida</h1>
+        <p>
+            Unesite rezultate pregleda vida i preporuku za odabrani elektronski karton korisnika.
+        </p>
+    </div>
+
+    <div class="eye-exam-card">
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="eye-exam-form-group">
+                <label asp-for="IdElektronskiKarton">Elektronski karton</label>
+                <select asp-for="IdElektronskiKarton"
+                        class="form-select eye-exam-input"
+                        asp-items="ViewBag.IdElektronskiKarton">
+                    <option value="">Odaberite karton korisnika</option>
+                </select>
+                <span asp-validation-for="IdElektronskiKarton" class="text-danger"></span>
+            </div>
+
+            <div class="eye-exam-form-group">
+                <label asp-for="DatumPregleda">Datum pregleda</label>
+                <input asp-for="DatumPregleda"
+                       type="date"
+                       class="form-control eye-exam-input" />
+                <span asp-validation-for="DatumPregleda" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="eye-exam-form-group">
+                        <label asp-for="DioptrijaLijevo">Dioptrija lijevo</label>
+                        <input asp-for="DioptrijaLijevo"
+                               type="number"
+                               step="0.25"
+                               class="form-control eye-exam-input"
+                               placeholder="npr. 0, -1.25, +0.75" />
+                        <small>Za nema dioptrije unesite 0.</small>
+                        <span asp-validation-for="DioptrijaLijevo" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="eye-exam-form-group">
+                        <label asp-for="DioptrijaDesno">Dioptrija desno</label>
+                        <input asp-for="DioptrijaDesno"
+                               type="number"
+                               step="0.25"
+                               class="form-control eye-exam-input"
+                               placeholder="npr. 0, -1.25, +0.75" />
+                        <small>Za nema dioptrije unesite 0.</small>
+                        <span asp-validation-for="DioptrijaDesno" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="eye-exam-form-group">
+                <label asp-for="Preporuka">Preporuka</label>
+                <textarea asp-for="Preporuka"
+                          class="form-control eye-exam-input eye-exam-textarea"
+                          rows="5"
+                          placeholder="Unesite preporuku, napomenu ili zaključak pregleda..."></textarea>
+                <span asp-validation-for="Preporuka" class="text-danger"></span>
+            </div>
+
+            <div class="eye-exam-actions">
+                <button type="submit" class="btn eye-exam-primary-btn">
+                    Spremi pregled
+                </button>
+
+                <a asp-action="Index" class="btn eye-exam-secondary-btn">
+                    Nazad
+                </a>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

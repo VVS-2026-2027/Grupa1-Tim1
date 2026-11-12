@@ -1,0 +1,171 @@
+@model OCULIS.Models.ViewModels.PlacanjeViewModel
+
+@{
+    ViewData["Title"] = "Plaćanje";
+}
+
+<section class="payment-page">
+    <div class="payment-layout">
+
+
+        <div class="payment-card">
+            <h2>
+                <i class="fa-solid fa-credit-card me-2"></i>
+                Plaćanje
+            </h2>
+
+            <div class="payment-total">
+                Ukupno za plaćanje:
+                <strong>@Model.Iznos.ToString("F2") KM</strong>
+            </div>
+
+            <form asp-action="Plati" method="post" id="placanjeForm">
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" asp-for="IdNarudzba" />
+                <input type="hidden" asp-for="Iznos" />
+
+                <label class="payment-label">Način plaćanja</label>
+
+                <div class="payment-options">
+                    <label class="payment-option active">
+                        <input type="radio" asp-for="NacinPlacanja" value="KreditnaKartica" checked />
+                        <i class="fa-regular fa-credit-card"></i>
+                        <span>Kartica</span>
+                    </label>
+
+                    <label class="payment-option">
+                        <input type="radio" asp-for="NacinPlacanja" value="PayPal" />
+                        <i class="fa-brands fa-paypal"></i>
+                        <span>PayPal</span>
+                    </label>
+
+                    <label class="payment-option">
+                        <input type="radio" asp-for="NacinPlacanja" value="Gotovina" />
+                        <i class="fa-solid fa-money-bill-wave"></i>
+                        <span>Pri preuzimanju</span>
+                    </label>
+                </div>
+
+                <div id="karticaGroup" class="payment-card-fields">
+                    <div class="mb-3">
+                        <label asp-for="BrojKartice" class="form-label">Broj kartice</label>
+                        
+                        <input asp-for="BrojKartice" id="brojKartice" class="form-control payment-input" maxlength="16" inputmode="numeric" placeholder="1234123412341234" />
+                        <span asp-validation-for="BrojKartice" class="text-danger"></span>
+                        <small class="text-muted">
+                            Simulacija: kartica koja završava na 0000 će biti odbijena.
+                        </small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Ime na kartici</label>
+                        <input class="form-control payment-input" placeholder="Ime i prezime" />
+                    </div>
+
+                    <div class="payment-two-cols">
+                        <div>
+                            <label class="form-label">Datum isteka</label>
+                            <input asp-for="DatumIsteka" id="datumIsteka" class="form-control payment-input" maxlength="5" inputmode="numeric" placeholder="MM/YY" />
+                            <span asp-validation-for="DatumIsteka" class="text-danger"></span>
+                        </div>
+
+                        <div>
+                            <label class="form-label">CVV</label>
+                            <input asp-for="CVV" id="cvv" class="form-control payment-input" maxlength="3" inputmode="numeric" placeholder="123" />
+                            <span asp-validation-for="CVV" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="paypalGroup" class="payment-info-box d-none">
+                    <i class="fa-brands fa-paypal"></i>
+                    <p>Nakon potvrde plaćanja bit ćete preusmjereni na simulirani PayPal servis.</p>
+                </div>
+
+                <div id="gotovinaGroup" class="payment-info-box d-none">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                    <p>Plaćanje pri preuzimanju.</p>
+                </div>
+
+                <button type="submit" class="payment-submit-btn mt-4" id="btnPlati">
+                    <i class="fa-solid fa-lock me-1"></i>
+                    Potvrdi plaćanje
+                </button>
+
+                <a asp-controller="Narudzba"
+                   asp-action="Details"
+                   asp-route-id="@Model.IdNarudzba"
+                   class="payment-back-link">
+                    Nazad na narudžbu
+                </a>
+            </form>
+
+            <div id="loadingPlacanje" class="payment-loading d-none">
+                <div class="spinner-border" role="status"></div>
+                <span>Obrada transakcije...</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function updatePaymentMethod() {
+            const selected = document.querySelector('input[name="NacinPlacanja"]:checked').value;
+
+            document.querySelectorAll('.payment-option').forEach(x => x.classList.remove('active'));
+            document.querySelector('input[name="NacinPlacanja"]:checked').closest('.payment-option').classList.add('active');
+
+            document.getElementById('karticaGroup').classList.toggle('d-none', selected !== 'KreditnaKartica');
+            document.getElementById('paypalGroup').classList.toggle('d-none', selected !== 'PayPal');
+            document.getElementById('gotovinaGroup').classList.toggle('d-none', selected !== 'Gotovina');
+        }
+
+        document.querySelectorAll('input[name="NacinPlacanja"]').forEach(radio => {
+            radio.addEventListener('change', updatePaymentMethod);
+        });
+
+        updatePaymentMethod();
+
+                document.getElementById('placanjeForm').addEventListener('submit', function (e) {
+            if (!$(this).valid()) {
+                return;
+            }
+
+            document.getElementById('loadingPlacanje').classList.remove('d-none');
+            document.getElementById('btnPlati').disabled = true;
+        });
+
+        const brojKartice = document.getElementById('brojKartice');
+        const datumIsteka = document.getElementById('datumIsteka');
+        const cvv = document.getElementById('cvv');
+
+        if (brojKartice) {
+            brojKartice.addEventListener('input', function () {
+                this.value = this.value.replace(/\D/g, '').substring(0, 16);
+            });
+        }
+
+        if (cvv) {
+            cvv.addEventListener('input', function () {
+                this.value = this.value.replace(/\D/g, '').substring(0, 3);
+            });
+        }
+
+        if (datumIsteka) {
+            datumIsteka.addEventListener('input', function () {
+                let value = this.value.replace(/\D/g, '').substring(0, 4);
+
+                if (value.length >= 3) {
+                    value = value.substring(0, 2) + '/' + value.substring(2);
+                }
+
+                this.value = value;
+            });
+        }
+    </script>
+}

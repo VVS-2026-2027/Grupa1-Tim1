@@ -1,0 +1,43 @@
+@model IEnumerable<OCULIS.Models.Narudzba>
+
+@{
+    ViewData["Title"] = "Narudžbe";
+}
+
+<section class="orders-page">
+    <div class="orders-header">
+        <span>OCULIS KUPOVINA</span>
+        <h1><i class="fa-solid fa-receipt me-2"></i>Narudžbe</h1>
+    </div>
+
+    <div class="orders-list">
+        @foreach (var n in Model)
+        {
+            <div class="order-card">
+                <div>
+                    <h4>Narudžba</h4>
+                    <p>@n.DatumNarudzbe.ToString("dd.MM.yyyy HH:mm")</p>
+                </div>
+
+                <div>
+                    <span>Korisnik</span>
+                    <strong>@n.Korisnik?.Ime @n.Korisnik?.Prezime</strong>
+                </div>
+
+                <div>
+                    <span>Status</span>
+                    <span class="order-status">@n.Status</span>
+                </div>
+
+                <div class="order-price">
+                    <span>Ukupno</span>
+                    <strong>@n.UkupnaCijena.ToString("F2") KM</strong>
+                </div>
+
+                <a asp-action="Details" asp-route-id="@n.Id" class="order-details-btn">
+                    Detalji
+                </a>
+            </div>
+        }
+    </div>
+</section>

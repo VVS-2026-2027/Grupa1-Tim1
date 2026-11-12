@@ -1,0 +1,73 @@
+@model OCULIS.Models.Poslovnica
+
+@{
+    ViewData["Title"] = Model.Naziv;
+    var apiKey = ViewBag.GoogleMapsApiKey as string ?? "";
+}
+
+<h1 class="page-title">@Model.Naziv</h1>
+
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="filter-card">
+            <p><strong>Adresa:</strong> @Model.Adresa</p>
+            <p><strong>Telefon:</strong> @Model.Telefon</p>
+            <p><strong>Radno vrijeme:</strong> @Model.RadnoVrijeme</p>
+
+            <div class="d-flex gap-2 flex-wrap mt-3">
+                @if (Model.Latitude != 0 && Model.Longitude != 0)
+                {
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=@Model.Latitude,@Model.Longitude"
+                       target="_blank"
+                       class="btn btn-oculis">
+                        <i class="fa-solid fa-diamond-turn-right me-1"></i>
+                        Navigacija
+                    </a>
+                }
+
+                <a asp-action="Index" class="btn btn-secondary">
+                    Nazad
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-7">
+        @if (string.IsNullOrWhiteSpace(apiKey) || Model.Latitude == 0 || Model.Longitude == 0)
+        {
+            <div class="map-placeholder" style="height:350px;border-radius:.75rem;">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <h4>Mapa trenutno nije dostupna</h4>
+                <p>Dodaj Google Maps API key da se mapa prikaže.</p>
+            </div>
+        }
+        else
+        {
+            <div id="mapDetail" style="height:350px;border-radius:.75rem;"></div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @if (!string.IsNullOrWhiteSpace(apiKey) && Model.Latitude != 0 && Model.Longitude != 0)
+    {
+        <script>
+            function initDetailMap() {
+                const pos = { lat: @Model.Latitude, lng: @Model.Longitude };
+
+                const map = new google.maps.Map(document.getElementById('mapDetail'), {
+                    zoom: 15,
+                    center: pos
+                });
+
+                new google.maps.Marker({
+                    position: pos,
+                    map: map,
+                    title: '@Model.Naziv'
+                });
+            }
+        </script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=@apiKey&callback=initDetailMap" async defer></script>
+    }
+}

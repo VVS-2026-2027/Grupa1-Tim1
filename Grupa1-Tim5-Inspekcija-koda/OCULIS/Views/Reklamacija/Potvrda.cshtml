@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Reklamacija poslana";
+}
+
+<section class="complaint-success-page">
+    <div class="complaint-success-card">
+        <div class="complaint-success-icon">
+            <i class="fa-solid fa-check"></i>
+        </div>
+
+        <span>ZAHTJEV ZAPRIMLJEN</span>
+
+        <h1>Reklamacija je uspješno poslana</h1>
+
+        <p>
+            Hvala vam na obraćanju. Vaša reklamacija je zaprimljena i naš tim će je pregledati u najkraćem mogućem roku.
+        </p>
+
+        <p>
+            Nakon obrade zahtjeva kontaktirat ćemo vas putem podataka povezanih s vašim korisničkim računom.
+        </p>
+
+        <div class="complaint-success-actions">
+            <a asp-controller="Reklamacija" asp-action="Index" class="btn complaint-primary-btn">
+                Pregled mojih reklamacija
+            </a>
+
+            <a asp-controller="Home" asp-action="Index" class="btn complaint-secondary-btn">
+                Nazad na početnu
+            </a>
+        </div>
+    </div>
+</section>

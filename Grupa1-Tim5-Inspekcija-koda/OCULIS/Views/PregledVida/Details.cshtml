@@ -1,0 +1,48 @@
+@model OCULIS.Models.PregledVida
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>PregledVida</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DatumPregleda)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DatumPregleda)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DioptrijaLijevo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DioptrijaLijevo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DioptrijaDesno)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DioptrijaDesno)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Preporuka)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Preporuka)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ElektronskiKarton)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ElektronskiKarton.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
