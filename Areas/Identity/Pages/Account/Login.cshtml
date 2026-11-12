@@ -1,0 +1,86 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Prijava";
+}
+
+<style>
+    body {
+        background-color: #fcf8f2;
+    }
+
+    .custom-card {
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(220, 175, 155, 0.15);
+        border: none;
+    }
+
+    .btn-bento {
+        background-color: #e29b83;
+        color: white;
+        border-radius: 10px;
+        border: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+        .btn-bento:hover {
+            background-color: #d1856c;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+    .form-control-bento {
+        border-radius: 12px;
+        border: 1px solid #ebd3c8;
+        padding: 12px;
+        background-color: #fffdfb;
+    }
+
+        .form-control-bento:focus {
+            border-color: #e29b83;
+            box-shadow: 0 0 0 0.2rem rgba(226, 155, 131, 0.25);
+        }
+
+    .tab-header {
+        font-weight: 700;
+        color: #7d5445;
+        border-bottom: 3px solid #e29b83;
+        padding-bottom: 5px;
+    }
+</style>
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5 card custom-card p-5">
+            <div class="text-center mb-4">
+                <span class="tab-header text-uppercase tracking-wider">Prijava</span>
+            </div>
+
+            <form method="post" asp-route-returnUrl="@Request.Query["ReturnUrl"]">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3 small"></div>
+
+                <div class="mb-3">
+                    <label class="form-label text-muted">E-mail adresa</label>
+                    <input asp-for="Input.Email" class="form-control form-control-bento" placeholder="ime@example.com" />
+                    <span asp-validation-for="Input.Email" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label text-muted">Lozinka</label>
+                    <input asp-for="Input.Password" class="form-control form-control-bento" placeholder="Unesite lozinku" />
+                    <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                </div>
+
+                <div class="text-center mt-2">
+                    <button type="submit" class="btn btn-bento btn-lg px-5 py-3 text-uppercase">Prijavi se</button>
+                </div>
+
+                <div class="text-center mt-4">
+                    <p class="text-muted small">Nemate nalog? <a asp-page="./Register" class="text-decoration-none" style="color: #e29b83; font-weight: 600;">Registruj se!</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
