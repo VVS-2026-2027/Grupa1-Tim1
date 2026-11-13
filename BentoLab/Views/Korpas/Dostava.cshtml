@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Podaci za dostavu";
+}
+
+<div class="container my-5" style="max-width: 650px; font-family: 'Segoe UI', sans-serif;">
+    <div class="card p-4" style="border-radius: 20px; border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.08); background-color: #fff;">
+
+        <h4 class="text-center mb-2" style="color: #b56c60; font-weight: bold;">Podaci za dostavu</h4>
+        <p class="text-center text-muted small mb-4">Popunite informacije za isporuku Vaše narudžbe</p>
+
+        <div class="alert p-3 mb-4" style="background-color: #fdf2f0; border-left: 4px solid #b56c60; color: #4a2c2a; border-radius: 8px;">
+            <small>⚠️ <strong>Zona dostave:</strong> Dostava je dostupna isključivo na području <strong>Kantona Sarajevo</strong>.</small>
+        </div>
+
+        <form asp-action="PotvrdiDostavu" method="post">
+            <div class="mb-3">
+                <label class="form-label small text-muted text-uppercase font-weight-bold">Ime i prezime</label>
+                <input type="text" name="ime" required class="form-control py-2" placeholder="Npr. Amina Hodžić" style="border-radius: 10px; border: 1px solid #e0e0e0; background-color: #f9f9f9;">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label small text-muted text-uppercase font-weight-bold">Adresa</label>
+                <input type="text" name="adresa" required class="form-control py-2" placeholder="Ulica i broj" style="border-radius: 10px; border: 1px solid #e0e0e0; background-color: #f9f9f9;">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label small text-muted text-uppercase font-weight-bold">Grad / Općina</label>
+                <select name="grad" class="form-select py-2" style="border-radius: 10px; border: 1px solid #e0e0e0; background-color: #f9f9f9;">
+                    <option>Sarajevo - Centar</option>
+                    <option>Sarajevo - Novi Grad</option>
+                    <option>Sarajevo - Stari Grad</option>
+                    <option>Sarajevo - Novo Sarajevo</option>
+                    <option>Ilidža</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label small text-muted text-uppercase font-weight-bold">Broj telefona</label>
+                <input type="text" name="telefon" required class="form-control py-2" placeholder="+387 61 000 000" style="border-radius: 10px; border: 1px solid #e0e0e0; background-color: #f9f9f9;">
+            </div>
+            <div class="form-group mb-3">
+                <label class="control-label text-uppercase font-weight-bold" style="font-size: 12px; color: #a18885;">E-mail adresa</label>
+                <input type="email" name="emailKupca" required class="form-control" placeholder="Npr. amina@gmail.com" style="border-radius: 10px; padding: 12px;" />
+            </div>
+            
+            <div class="mb-4">
+                <label class="form-label small text-muted text-uppercase font-weight-bold">Napomena <span class="text-lowercase text-muted">(Opcionalno)</span></label>
+                <textarea name="napomena" class="form-control" rows="2" placeholder="Npr. interfon broj, sprat, posebna uputstva za dostavljača..." style="border-radius: 10px; border: 1px solid #e0e0e0; background-color: #f9f9f9;"></textarea>
+            </div>
+
+            <div class="d-flex gap-3">
+                <a asp-action="Create" class="btn btn-light py-2 px-4" style="border-radius: 10px; font-weight: bold; border: 1px solid #e0e0e0; color: #4a2c2a;">&larr; Nazad</a>
+                <button type="submit" class="btn flex-grow-1 py-2 text-white" style="background-color: #b56c60; border-radius: 10px; font-weight: bold;">Dalje &rarr;</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+﻿@model BentoLab.Models.Dostava
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Dostava</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Adresa)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Adresa)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.KontaktTelefon)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.KontaktTelefon)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CijenaDostave)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CijenaDostave)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VrijemeIsporuke)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VrijemeIsporuke)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Napomena)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Napomena)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Narudzba)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Narudzba.NarudzbaID)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.DostavaID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,180 @@
+﻿@model IEnumerable<BentoLab.Models.Korisnik>
+
+@{
+    ViewData["Title"] = "Upravljanje korisnicima";
+}
+
+<style>
+    body {
+        background-color: #fcf8f2;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .admin-card {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 25px rgba(93, 64, 55, 0.08);
+        padding: 35px;
+        margin-top: 50px;
+        border: 1px solid rgba(93, 64, 55, 0.1);
+        position: relative;
+        z-index: 2;
+    }
+
+    .admin-title {
+        font-family: 'Playfair Display', serif;
+        color: #5d4037;
+        font-weight: 700;
+        margin-bottom: 25px;
+        letter-spacing: -0.5px;
+    }
+
+    .bento-table-container {
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid rgba(226, 155, 131, 0.2);
+    }
+
+    .bento-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
+    }
+
+        .bento-table thead th {
+            background-color: #e29b83;
+            color: white;
+            font-weight: 600;
+            padding: 15px;
+            text-align: left;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .bento-table tbody td {
+            padding: 18px 15px;
+            color: #5d4037;
+            background-color: white;
+            border-bottom: 1px solid rgba(226, 155, 131, 0.1);
+            font-size: 1rem;
+        }
+
+        .bento-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .bento-table tbody tr:hover td {
+            background-color: #fcefe9;
+            transition: background-color 0.2s ease;
+        }
+
+    .user-id-cell {
+        font-family: 'Courier New', monospace;
+        font-size: 0.85rem;
+        color: #8d6e63;
+    }
+
+    .status-badge {
+        background-color: #d1856c;
+        color: white;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+</style>
+
+<div class="container pb-5">
+    <div class="admin-card">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="admin-title">
+                👥 Upravljanje korisnicima
+            </h2>
+
+            <div class="text-end">
+                <div class="fw-bold" style="color: #5d4037; font-size: 1.2rem;">
+                    @Model.Count()
+                </div>
+                <div class="text-muted" style="font-size: 0.85rem;">
+                    Ukupno računa
+                </div>
+            </div>
+        </div>
+
+        <p class="text-muted mb-4" style="font-size: 0.95rem;">
+            Dobrodošli u BentoLab Admin Panel. Ispod je prikazana lista svih registrovanih klijenata.
+        </p>
+
+        <div class="bento-table-container shadow-sm">
+            <div class="table-responsive">
+                <table class="bento-table">
+                    <thead>
+                        <tr>
+                            <th>Korisničko ime</th>
+                            <th>Email adresa</th>
+                            <th>ID Korisnika</th>
+                            <th>Status</th>
+                            <th>Akcija</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var user in Model)
+                        {
+                            bool blokiran = user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.UtcNow;
+
+                            <tr>
+                                <td class="fw-bold">@user.ImePrezime</td>
+                                <td>@user.Email</td>
+                                <td class="user-id-cell">@user.Id</td>
+                                <td>
+                                    @if (blokiran)
+                                    {
+                                        <span class="status-badge" style="background-color:#f4c7bd; color:#8a3b2e;">
+                                            Blokiran
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status-badge">
+                                            Aktivan
+                                        </span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (blokiran)
+                                    {
+                                        <form asp-controller="Home" asp-action="OdblokirajKorisnika" method="post">
+                                            <input type="hidden" name="id" value="@user.Id" />
+                                            <button type="submit" class="btn btn-sm text-white" style="background-color:#e29b83; border-radius:8px;">
+                                                Odblokiraj
+                                            </button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form asp-controller="Home" asp-action="BlokirajKorisnika" method="post">
+                                            <input type="hidden" name="id" value="@user.Id" />
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" style="border-radius:8px;">
+                                                Blokiraj
+                                            </button>
+                                        </form>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <div class="mt-4 text-center text-muted" style="font-size: 0.85rem;">
+            © 2026 BentoLab
+        </div>
+
+    </div>
+</div>

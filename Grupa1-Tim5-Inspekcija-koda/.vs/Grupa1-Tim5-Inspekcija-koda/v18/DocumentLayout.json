@@ -1,0 +1,173 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:OCULIS\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:OCULIS\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\ObavijestController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:OCULIS\\Controllers\\ObavijestController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\NarudzbaController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:OCULIS\\Controllers\\NarudzbaController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\KorpaController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:OCULIS\\Controllers\\KorpaController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\KorisnikController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:OCULIS\\Controllers\\KorisnikController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\HomeController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:OCULIS\\Controllers\\HomeController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\ElektronskiKartonController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:OCULIS\\Controllers\\ElektronskiKartonController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\AkcijaController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:OCULIS\\Controllers\\AkcijaController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\appsettings.json",
+              "RelativeDocumentMoniker": "OCULIS\\appsettings.json",
+              "ToolTip": "C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\appsettings.json",
+              "RelativeToolTip": "OCULIS\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-11-12T15:43:16.84Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Program.cs",
+              "RelativeDocumentMoniker": "OCULIS\\Program.cs",
+              "ToolTip": "C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Program.cs",
+              "RelativeToolTip": "OCULIS\\Program.cs",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAIwFUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-12T15:36:40.049Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ObavijestController.cs",
+              "DocumentMoniker": "C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\ObavijestController.cs",
+              "RelativeDocumentMoniker": "OCULIS\\Controllers\\ObavijestController.cs",
+              "ToolTip": "C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\ObavijestController.cs",
+              "RelativeToolTip": "OCULIS\\Controllers\\ObavijestController.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAIwFEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-12T15:25:42.099Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "NarudzbaController.cs",
+              "DocumentMoniker": "C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\NarudzbaController.cs",
+              "RelativeDocumentMoniker": "OCULIS\\Controllers\\NarudzbaController.cs",
+              "ToolTip": "C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\NarudzbaController.cs",
+              "RelativeToolTip": "OCULIS\\Controllers\\NarudzbaController.cs",
+              "ViewState": "AgIAAKsAAAAAAAAAAAAIwL4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-12T15:20:41.728Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "KorpaController.cs",
+              "DocumentMoniker": "C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\KorpaController.cs",
+              "RelativeDocumentMoniker": "OCULIS\\Controllers\\KorpaController.cs",
+              "ToolTip": "C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\KorpaController.cs",
+              "RelativeToolTip": "OCULIS\\Controllers\\KorpaController.cs",
+              "ViewState": "AgIAAKMAAAAAAAAAAAAQwLYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-12T15:16:11.702Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "KorisnikController.cs",
+              "DocumentMoniker": "C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\KorisnikController.cs",
+              "RelativeDocumentMoniker": "OCULIS\\Controllers\\KorisnikController.cs",
+              "ToolTip": "C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\KorisnikController.cs",
+              "RelativeToolTip": "OCULIS\\Controllers\\KorisnikController.cs",
+              "ViewState": "AgIAAHkAAAAAAAAAAAAIwIwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-12T15:11:07.737Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "OCULIS\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "OCULIS\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAQwFwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-12T15:06:17.674Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ElektronskiKartonController.cs",
+              "DocumentMoniker": "C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\ElektronskiKartonController.cs",
+              "RelativeDocumentMoniker": "OCULIS\\Controllers\\ElektronskiKartonController.cs",
+              "ToolTip": "C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\ElektronskiKartonController.cs",
+              "RelativeToolTip": "OCULIS\\Controllers\\ElektronskiKartonController.cs",
+              "ViewState": "AgIAAG4AAAAAAAAAAAAIwIEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-12T14:59:19.691Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AkcijaController.cs",
+              "DocumentMoniker": "C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\AkcijaController.cs",
+              "RelativeDocumentMoniker": "OCULIS\\Controllers\\AkcijaController.cs",
+              "ToolTip": "C:\\Users\\iTTaste\\Desktop\\Grupa1-Tim1\\Grupa1-Tim5-Inspekcija-koda\\OCULIS\\Controllers\\AkcijaController.cs",
+              "RelativeToolTip": "OCULIS\\Controllers\\AkcijaController.cs",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAIwFUAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-12T14:37:48.149Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

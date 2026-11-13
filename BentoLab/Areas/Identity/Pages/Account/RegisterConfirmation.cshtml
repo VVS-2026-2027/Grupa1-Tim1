@@ -1,0 +1,45 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Potvrda";
+}
+
+<style>
+    body {
+
+        background-color: #fcf8f2;
+    }
+    .custom-card {
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(220, 175, 155, 0.15);
+        border: none;
+    }
+
+    .btn-bento {
+        background-color: #e29b83;
+        color: white;
+        border-radius: 10px;
+        border: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+        .btn-bento:hover {
+            background-color: #d1856c;
+            color: white;
+        }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 card p-5 custom-card text-center">
+            <h2 style="color: #7d5445; font-weight: 700;">Skoro gotovo! ✨</h2>
+            <p class="text-muted mt-3">Kreirali ste račun. Kliknite na dugme ispod kako biste završili verifikaciju i aktivirali nalog.</p>
+            
+            <div class="mt-4">
+                <a href="@Model.EmailConfirmationUrl" class="btn btn-bento btn-lg w-100 py-3 text-uppercase">Aktiviraj račun</a>
+            </div>
+        </div>
+    </div>
+</div>

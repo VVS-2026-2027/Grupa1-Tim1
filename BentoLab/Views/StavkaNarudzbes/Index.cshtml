@@ -1,0 +1,51 @@
+﻿@model IEnumerable<BentoLab.Models.StavkaNarudzbe>
+
+@{
+    ViewData["Title"] = "Stavke narudžbe";
+    var ukupno = Model.Sum(s => s.Kolicina * s.CijenaStavke);
+}
+
+<h1>Stavke narudžbe</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Dodaj novu stavku</a>
+</p>
+
+@if (!Model.Any())
+{
+    <p>Trenutno nema dodanih stavki narudžbe.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Torta</th>
+                <th>Količina</th>
+                <th>Cijena stavke</th>
+                <th>Ukupno za stavku</th>
+                <th>Narudžba</th>
+                <th>Akcije</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Torta?.Naziv</td>
+                    <td>@item.Kolicina</td>
+                    <td>@item.CijenaStavke KM</td>
+                    <td>@(item.Kolicina * item.CijenaStavke) KM</td>
+                    <td>@item.NarudzbaID</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.StavkaID">Uredi</a> |
+                        <a asp-action="Details" asp-route-id="@item.StavkaID">Detalji</a> |
+                        <a asp-action="Delete" asp-route-id="@item.StavkaID">Obriši</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h4>Ukupna cijena svih stavki: @ukupno KM</h4>
+}
