@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../UnitTestiranje/UnitTestiranje.csproj" />
+  <Project Path="BentoLab.csproj" />
+</Solution>

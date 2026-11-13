@@ -1,0 +1,4 @@
+﻿IdKorisnika,PostojiUBazi,UlogaKorisnika,TrebaBlokirati
+10,true,KUPAC,true
+20,true,ADMIN,false
+99,false,KUPAC,false

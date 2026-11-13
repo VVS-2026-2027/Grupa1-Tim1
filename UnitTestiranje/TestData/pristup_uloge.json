@@ -1,0 +1,20 @@
+﻿[
+  {
+    "Opis": "Neprijavljen korisnik (null)",
+    "Postoji": false,
+    "Uloga": "KUPAC",
+    "DozvoljenPristup": false
+  },
+  {
+    "Opis": "Prijavljen obicni kupac",
+    "Postoji": true,
+    "Uloga": "KUPAC",
+    "DozvoljenPristup": false
+  },
+  {
+    "Opis": "Prijavljen administrator",
+    "Postoji": true,
+    "Uloga": "ADMIN",
+    "DozvoljenPristup": true
+  }
+]
