@@ -1,0 +1,47 @@
+﻿@model BentoLab.Models.Narudzba
+@using BentoLab.Models
+
+@{
+    ViewData["Title"] = "Uredi narudžbu";
+}
+
+<h1>Uredi narudžbu</h1>
+<hr />
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="NarudzbaID" />
+    <input type="hidden" asp-for="UkupnaCijena" />
+    <input type="hidden" asp-for="KoeficijentSlozenosti" />
+    <input type="hidden" asp-for="DatumNarudzbe" />
+    <input type="hidden" asp-for="KorisnikID" />
+    <input type="hidden" asp-for="Status" />
+
+    <div class="form-group">
+        <label>Ukupna cijena</label>
+        <input value="@Model.UkupnaCijena KM" class="form-control" disabled />
+    </div>
+
+    <div class="form-group">
+        <label>Status</label>
+        <input value="@Model.Status" class="form-control" disabled />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DatumPreuzimanja">Datum preuzimanja</label>
+        <input asp-for="DatumPreuzimanja" class="form-control" type="datetime-local" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NacinPreuzimanja">Način preuzimanja</label>
+        <select asp-for="NacinPreuzimanja"
+                class="form-control"
+                asp-items="Html.GetEnumSelectList<NacinPreuzimanja>()">
+        </select>
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-primary">Sačuvaj</button>
+</form>
+
+<br />
+<a asp-action="Index">Nazad na listu</a>

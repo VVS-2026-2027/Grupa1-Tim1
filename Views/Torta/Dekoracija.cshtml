@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Dekoracija";
+}
+
+<div class="container mt-4" style="background-color: #f4f1de; padding: 30px; border-radius: 20px; max-width: 900px; color: #3d405b;">
+    <h2 class="text-center mb-4" style="font-family: 'Segoe UI', sans-serif; font-weight: bold; color: #e07a5f;">Dekorišite svoju tortu</h2>
+
+    <form asp-controller="Torta" asp-action="Dekoracija" method="post">
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="p-4 shadow-sm" style="background-color: #dda15e; border-radius: 15px; color: white;">
+                    <h5 class="text-center mb-3 text-white" style="font-weight: bold;">BENTO UKRASI</h5>
+
+                    <div class="form-check p-2 mb-2 bg-white rounded shadow-sm d-flex align-items-center">
+                        <input class="form-check-input ms-2" type="checkbox" name="ukrasi" value="Perlice" id="uk1">
+                        <label class="form-check-label fw-bold ms-3 text-dark" for="uk1">Perlice (+1.00 KM)</label>
+                    </div>
+                    <div class="form-check p-2 mb-2 bg-white rounded shadow-sm d-flex align-items-center">
+                        <input class="form-check-input ms-2" type="checkbox" name="ukrasi" value="Šljokice" id="uk2">
+                        <label class="form-check-label fw-bold ms-3 text-dark" for="uk2">Šljokice (+1.00 KM)</label>
+                    </div>
+                    <div class="form-check p-2 mb-2 bg-white rounded shadow-sm d-flex align-items-center">
+                        <input class="form-check-input ms-2" type="checkbox" name="ukrasi" value="Cvijeće" id="uk3">
+                        <label class="form-check-label fw-bold ms-3 text-dark" for="uk3">Cvijeće (+2.00 KM)</label>
+                    </div>
+                    <div class="form-check p-2 mb-2 bg-white rounded shadow-sm d-flex align-items-center">
+                        <input class="form-check-input ms-2" type="checkbox" name="ukrasi" value="Mašnice" id="uk4">
+                        <label class="form-check-label fw-bold ms-3 text-dark" for="uk4">Mašnice (+3.00 KM)</label>
+                    </div>
+                    <div class="form-check p-2 bg-white rounded shadow-sm d-flex align-items-center">
+                        <input class="form-check-input ms-2" type="checkbox" name="ukrasi" value="Figurica" id="uk5">
+                        <label class="form-check-label fw-bold ms-3 text-dark" for="uk5">Figurica (+5.00 KM)</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4 d-flex flex-column justify-content-between">
+                <div class="p-3 shadow-sm mb-2" style="background-color: #dda15e; border-radius: 15px;">
+                    <h5 class="text-center mb-2 text-white" style="font-weight: bold;">VRSTA ŠLAGA</h5>
+                    <select name="slag" class="form-select border-0 shadow-sm">
+                        <option value="Ništa">Bez posebnog šlaga</option>
+                        <option value="Čokolada">Čokolada (+1.00 KM)</option>
+                        <option value="Vanilija">Vanilija (+1.00 KM)</option>
+                        <option value="Jagoda">Jagoda (+1.00 KM)</option>
+                    </select>
+                </div>
+
+                <div class="p-3 shadow-sm mb-2" style="background-color: #dda15e; border-radius: 15px;">
+                    <h5 class="text-center mb-2 text-white" style="font-weight: bold;">DODACI</h5>
+                    <select name="dodaci" class="form-select border-0 shadow-sm">
+                        <option value="Ništa od ponuđenog">Ništa od ponuđenog</option>
+                        <option value="Voće">Voće (+1.00 KM)</option>
+                        <option value="Orašasti plodovi">Orašasti plodovi (+1.00 KM)</option>
+                        <option value="Keks">Keks (+1.00 KM)</option>
+                    </select>
+                </div>
+
+                <div class="p-3 shadow-sm" style="background-color: #dda15e; border-radius: 15px;">
+                    <h5 class="text-center mb-2 text-white" style="font-weight: bold;">POSEBNE NAPOMENE</h5>
+                    <input type="text" name="napomena" class="form-control border-0 shadow-sm" placeholder="Npr. Natpis sretan rođendan..." />
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <a asp-action="Kreiraj" class="btn btn-outline-secondary btn-lg px-4 shadow-sm" style="border-radius: 10px;">&larr; Nazad</a>
+            <button type="submit" class="btn btn-dark btn-lg px-4 shadow-sm" style="border-radius: 10px; background-color: #e07a5f; border: none;">Izračunaj cijenu &rarr;</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Kreirajte svoju tortu";
+}
+
+<div class="container mt-4" style="background-color: #dda15e; padding: 30px; border-radius: 20px; max-width: 900px; color: #fff;">
+    <h2 class="text-center mb-4" style="font-family: 'Segoe UI', sans-serif; font-weight: bold;">Kreirajte svoju tortu</h2>
+
+    <form asp-controller="Torta" asp-action="Kreiraj" method="post">
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="p-4 shadow-sm" style="background-color: #f4f1de; border-radius: 15px; height: 100%; color: #3d405b;">
+                    <h5 class="text-center mb-3" style="font-weight: bold; color: #e07a5f;">ODABERI OKUS</h5>
+                    
+                    <div class="form-check p-2 mb-2 bg-white rounded shadow-sm d-flex align-items-center">
+                        <input class="form-check-input ms-2" type="radio" name="okus" id="o1" value="Bueno" checked>
+                        <label class="form-check-label fw-bold ms-3" for="o1">Bueno</label>
+                    </div>
+                    <div class="form-check p-2 mb-2 bg-white rounded shadow-sm d-flex align-items-center">
+                        <input class="form-check-input ms-2" type="radio" name="okus" id="o2" value="Raffaelo">
+                        <label class="form-check-label fw-bold ms-3" for="o2">Raffaelo</label>
+                    </div>
+                    <div class="form-check p-2 mb-2 bg-white rounded shadow-sm d-flex align-items-center">
+                        <input class="form-check-input ms-2" type="radio" name="okus" id="o3" value="Berry pistachio">
+                        <label class="form-check-label fw-bold ms-3" for="o3">Berry pistachio</label>
+                    </div>
+                    <div class="form-check p-2 mb-2 bg-white rounded shadow-sm d-flex align-items-center">
+                        <input class="form-check-input ms-2" type="radio" name="okus" id="o4" value="Nutella">
+                        <label class="form-check-label fw-bold ms-3" for="o4">Nutella</label>
+                    </div>
+                    <div class="form-check p-2 bg-white rounded shadow-sm d-flex align-items-center">
+                        <input class="form-check-input ms-2" type="radio" name="okus" id="o5" value="Crunchy">
+                        <label class="form-check-label fw-bold ms-3" for="o5">Crunchy</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4 d-flex flex-column justify-content-between">
+                <div class="p-4 shadow-sm mb-3" style="background-color: #f4f1de; border-radius: 15px; color: #3d405b;">
+                    <h5 class="text-center mb-3" style="font-weight: bold; color: #e07a5f;">ODABERI OBLIK</h5>
+                    <select name="oblik" class="form-select form-select-lg border-0 shadow-sm">
+                        <option value="Krug">Krug</option>
+                        <option value="Srce">Srce</option>
+                        <option value="Kvadrat">Kvadrat</option>
+                    </select>
+                </div>
+
+                <div class="p-4 shadow-sm" style="background-color: #f4f1de; border-radius: 15px; color: #3d405b;">
+                    <h5 class="text-center mb-3" style="font-weight: bold; color: #e07a5f;">UNESI BOJU</h5>
+                    <input type="text" name="boja" class="form-control form-control-lg border-0 shadow-sm" placeholder="Npr. Roza, Bijela..." value="Preporuka slastičara" />
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <a asp-action="Index" class="btn btn-light btn-lg px-4 shadow-sm" style="border-radius: 10px;">&larr; Nazad</a>
+            <button type="submit" class="btn btn-dark btn-lg px-4 shadow-sm" style="border-radius: 10px; background-color: #3d405b;">Sljedeći korak &rarr;</button>
+        </div>
+    </form>
+</div>

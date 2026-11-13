@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Procjena Cijene";
+
+    string okus = TempData["IzabraniOkus"]?.ToString() ?? "Bueno";
+    string oblik = TempData["IzabraniOblik"]?.ToString() ?? "Krug";
+    string boja = TempData["IzabranaBoja"]?.ToString() ?? "Preporuka slastičara";
+    string ukrasi = TempData["IzabraniUkrasi"]?.ToString() ?? "Nema ukrasa";
+    string slag = TempData["IzabraniSlag"]?.ToString() ?? "Ništa";
+    string dodaci = TempData["IzabraniDodaci"]?.ToString() ?? "Ništa od ponuđenog";
+
+    string osnovna = TempData["OsnovnaCijena"]?.ToString() ?? "22.00";
+    string dodatno = TempData["DodatnoCijena"]?.ToString() ?? "4.00";
+    string koeficijent = TempData["Koeficijent"]?.ToString() ?? "1.25";
+    string ukupno = TempData["UkupnaCijenaKonacna"]?.ToString() ?? "32.50";
+}
+
+<div class="container mt-4" style="max-width: 750px; background-color: #f7ede2; padding: 30px; border-radius: 20px; color: #3d405b;">
+    <h3 class="mb-4 text-center fw-bold" style="color: #e07a5f;">Pregled cijene vaše torte</h3>
+
+    <div class="bg-white p-4 mb-3 shadow-sm" style="border-radius: 12px;">
+        <div class="d-flex justify-content-between border-bottom pb-3 mb-3">
+            <span>
+                <strong style="color: #3d405b; font-size: 17px;">Osnovna cijena torte</strong><br>
+                <small class="text-muted">Okus: @okus | Oblik: @oblik | Boja: @boja</small>
+            </span>
+            <span class="fw-bold fs-5">@osnovna KM</span>
+        </div>
+
+        <div class="d-flex justify-content-between border-bottom pb-3 mb-3">
+            <span>
+                <strong style="color: #3d405b; font-size: 17px;">Dodatne dekoracije & Sastojci</strong><br>
+                <small class="text-muted">Ukrasi: @ukrasi</small><br>
+                <small class="text-muted">Šlag: @slag | Dodaci: @dodaci</small>
+            </span>
+            <span class="fw-bold fs-5 text-success">+ @dodatno KM</span>
+        </div>
+
+        <div class="d-flex justify-content-between py-2 text-warning">
+            <span>
+                <strong style="color: #f2cc8f; font-size: 17px;">Koeficijent složenosti rada</strong><br>
+                <small class="text-muted">Utrošeni trud za dekoraciju bento kutijice</small>
+            </span>
+            <span class="fw-bold fs-5" style="color: #f2cc8f;">x @koeficijent</span>
+        </div>
+    </div>
+
+    <div class="p-3 text-white text-center mb-4 shadow" style="background-color: #e07a5f; border-radius: 12px;">
+        <h5 class="mb-1">UKUPNA CIJENA</h5>
+        <h2 class="fw-bold" style="font-size: 36px;">@ukupno KM</h2>
+        <small>Dostava se obračunava prilikom završetka narudžbe</small>
+    </div>
+
+    <form asp-controller="Torta" asp-action="DodajUKorpu" method="post">
+        <input type="hidden" name="nazivTorte" value="@($"{okus} bento cake ({oblik})")" />
+        <input type="hidden" name="cijenaTorte" value="@ukupno" />
+        <div class="d-flex justify-content-between">
+            <a asp-action="Dekoracija" class="btn btn-light btn-lg px-4 shadow-sm" style="border-radius: 10px;">Izmijeni izbor</a>
+            <button type="submit" class="btn btn-success btn-lg px-5 shadow-sm fw-bold" style="border-radius: 10px; background-color: #3d405b; border: none;">
+                ✓ Potvrdi i dodaj u korpu
+            </button>
+        </div>
+    </form>
+</div>
