@@ -1,13 +1,11 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using System.Collections.Generic;
-
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BentoLab.Controllers;
 using BentoLab.Data;
 using BentoLab.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -39,6 +37,8 @@ namespace UnitTestiranje
             using (var context = new ApplicationDbContext(options))
             {
                 var controller = new AdminNarudzbeController(context);
+                controller.TempData = new TempDataDictionary(
+                    new DefaultHttpContext(), new LazniTempDataProvider());
                 await controller.OtkaziNarudzbu(100);
             }
 
@@ -51,43 +51,43 @@ namespace UnitTestiranje
         }
 
         [TestMethod]
-public async Task OtkaziNarudzbu_KreiranaNarudzba_PostavljaPorukuUTempData()
-{
-    // Arrange
-    var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-        .UseInMemoryDatabase(Guid.NewGuid().ToString())
-        .Options;
+        public async Task OtkaziNarudzbu_KreiranaNarudzba_PostavljaPorukuUTempData()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
 
-    using var context = new ApplicationDbContext(options);
-    context.Narudzbe.Add(new Narudzba
-    {
-        NarudzbaID = 100,
-        KorisnikID = 1,
-        Status = StatusNarudzbe.KREIRANA
-    });
-    await context.SaveChangesAsync();
+            using var context = new ApplicationDbContext(options);
+            context.Narudzbe.Add(new Narudzba
+            {
+                NarudzbaID = 100,
+                KorisnikID = 1,
+                Status = StatusNarudzbe.KREIRANA
+            });
+            await context.SaveChangesAsync();
 
-    var controller = new AdminNarudzbeController(context);
-    controller.TempData = new TempDataDictionary(
-        new DefaultHttpContext(), new LazniTempDataProvider());
+            var controller = new AdminNarudzbeController(context);
+            controller.TempData = new TempDataDictionary(
+                new DefaultHttpContext(), new LazniTempDataProvider());
 
-    // Act
-    await controller.OtkaziNarudzbu(100);
+            // Act
+            await controller.OtkaziNarudzbu(100);
 
-    // Assert
-    Assert.AreEqual("Narudžba je uspješno otkazana.", controller.TempData["Poruka"]);
-}
+            // Assert
+            Assert.AreEqual("Narudžba je uspješno otkazana.", controller.TempData["Poruka"]);
+        }
     }
 
     public class LazniTempDataProvider : ITempDataProvider
-{
-    public IDictionary<string, object> LoadTempData(HttpContext context)
     {
-        return new Dictionary<string, object>();
-    }
+        public IDictionary<string, object> LoadTempData(HttpContext context)
+        {
+            return new Dictionary<string, object>();
+        }
 
-    public void SaveTempData(HttpContext context, IDictionary<string, object> values)
-    {
+        public void SaveTempData(HttpContext context, IDictionary<string, object> values)
+        {
+        }
     }
-}
 }

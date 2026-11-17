@@ -73,6 +73,9 @@ public async Task<IActionResult> OtkaziNarudzbu(int id)
     narudzba.Status = StatusNarudzbe.OTKAZANA;
     await _context.SaveChangesAsync();
 
+
+TempData["Poruka"] = "Narudžba je uspješno otkazana.";
+
     return RedirectToAction(nameof(Index));
 }
     }
