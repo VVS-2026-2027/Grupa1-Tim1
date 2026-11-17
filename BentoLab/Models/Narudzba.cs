@@ -35,5 +35,9 @@ namespace BentoLab.Models
         public Narudzba()
         {
         }
+        public bool MozeSeOtkazati()
+        {
+            return Status == StatusNarudzbe.KREIRANA;
+        }
     }
 }
