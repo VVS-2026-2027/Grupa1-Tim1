@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BentoLab.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -65,16 +66,26 @@ namespace BentoLab.Controllers
         }
         
 // 3. OTKAZIVANJE NARUDŽBE
+
 [HttpPost]
 public async Task<IActionResult> OtkaziNarudzbu(int id)
 {
     var narudzba = await _context.Narudzbe.FindAsync(id);
+    var servis = new NarudzbaServis();
+
+    try
+    {
+        servis.ValidirajOtkazivanje(narudzba);
+    }
+    catch (Exception)
+    {
+        return RedirectToAction(nameof(Index));
+    }
 
     narudzba.Status = StatusNarudzbe.OTKAZANA;
     await _context.SaveChangesAsync();
 
-
-TempData["Poruka"] = "Narudžba je uspješno otkazana.";
+    TempData["Poruka"] = "Narudžba je uspješno otkazana.";
 
     return RedirectToAction(nameof(Index));
 }
