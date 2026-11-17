@@ -129,6 +129,24 @@ namespace UnitTestiranje
 
             Assert.AreEqual("Narudžba se ne može otkazati.", controller.TempData["Greska"]);
         }
+
+        [TestMethod]
+public async Task OtkaziNarudzbu_NepostojecaNarudzba_PostavljaPorukuDaNarudzbaNePostoji()
+{
+    var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        .UseInMemoryDatabase(Guid.NewGuid().ToString())
+        .Options;
+
+    using var context = new ApplicationDbContext(options);
+
+    var controller = new AdminNarudzbeController(context);
+    controller.TempData = new TempDataDictionary(
+        new DefaultHttpContext(), new LazniTempDataProvider());
+
+    await controller.OtkaziNarudzbu(999);
+
+    Assert.AreEqual("Narudžba ne postoji.", controller.TempData["Greska"]);
+}
     }
 
     public class LazniTempDataProvider : ITempDataProvider
