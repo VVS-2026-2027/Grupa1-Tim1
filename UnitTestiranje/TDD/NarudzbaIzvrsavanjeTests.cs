@@ -1,10 +1,8 @@
-
 using System;
 using System.Threading.Tasks;
 using BentoLab.Controllers;
 using BentoLab.Data;
 using BentoLab.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -14,38 +12,37 @@ namespace UnitTestiranje
     public class NarudzbaIzvrsavanjeTests
     {
         [TestMethod]
-        public async Task OtkaziNarudzbu_StatusSeMijenjaUOtkazana()
+        public async Task OtkaziNarudzbu_KreiranaNarudzba_StatusPostajeOtkazanaUBazi()
         {
-            // Arrange
+            // Arrange: upisi narudzbu u bazu (prvi context)
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
 
-            using var context = new ApplicationDbContext(options);
-
-            var narudzba = new Narudzba
+            using (var context = new ApplicationDbContext(options))
             {
-                NarudzbaID = 100,
-                KorisnikID = 1,
-                Status = StatusNarudzbe.KREIRANA
-            };
+                context.Narudzbe.Add(new Narudzba
+                {
+                    NarudzbaID = 100,
+                    KorisnikID = 1,
+                    Status = StatusNarudzbe.KREIRANA
+                });
+                await context.SaveChangesAsync();
+            }
 
-            context.Narudzbe.Add(narudzba);
-            await context.SaveChangesAsync();
+            // Act: kontroler dobija svoj context (drugi context)
+            using (var context = new ApplicationDbContext(options))
+            {
+                var controller = new AdminNarudzbeController(context);
+                await controller.OtkaziNarudzbu(100);
+            }
 
-            var controller = new AdminNarudzbeController(context);
-
-            // Act
-            await controller.OtkaziNarudzbu(narudzba.NarudzbaID);
-
-            // Assert
-            var sacuvanaNarudzba = await context.Narudzbe
-                .FindAsync(narudzba.NarudzbaID);
-
-            Assert.AreEqual(
-                StatusNarudzbe.OTKAZANA,
-                sacuvanaNarudzba!.Status
-            );
+            // Assert: treci, potpuno novi context cita iz baze
+            using (var context = new ApplicationDbContext(options))
+            {
+                var narudzba = await context.Narudzbe.FindAsync(100);
+                Assert.AreEqual(StatusNarudzbe.OTKAZANA, narudzba!.Status);
+            }
         }
     }
 }

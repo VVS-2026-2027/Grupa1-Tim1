@@ -63,5 +63,12 @@ namespace BentoLab.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        
+// 3. OTKAZIVANJE NARUDŽBE
+[HttpPost]
+public async Task<IActionResult> OtkaziNarudzbu(int id)
+{
+    return RedirectToAction(nameof(Index));
+}
     }
 }
