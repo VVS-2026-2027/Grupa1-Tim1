@@ -1,0 +1,65 @@
+﻿@model IEnumerable<BentoLab.Models.Narudzba>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UkupnaCijena)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KoeficijentSlozenosti)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatumNarudzbe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NacinPreuzimanja)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Korisnik)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UkupnaCijena)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KoeficijentSlozenosti)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatumNarudzbe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NacinPreuzimanja)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Korisnik.KorisnikID)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.NarudzbaID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.NarudzbaID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.NarudzbaID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,42 @@
+﻿@model BentoLab.Models.StavkaNarudzbe
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>StavkaNarudzbe</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Kolicina)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Kolicina)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CijenaStavke)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CijenaStavke)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Narudzba)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Narudzba.NarudzbaID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Torta)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Torta.TortaID)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.StavkaID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

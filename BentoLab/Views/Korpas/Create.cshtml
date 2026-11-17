@@ -1,0 +1,98 @@
+﻿@{
+    ViewData["Title"] = "Način preuzimanja";
+}
+
+<div class="container my-5" style="max-width: 800px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <h3 class="mb-4" style="color: #4a2c2a; font-weight: bold;">Način preuzimanja</h3>
+
+    <form asp-action="ProcesirajPreuzimanje" method="post">
+        <div class="form-group mb-4">
+            <label class="control-label text-uppercase fw-bold" style="font-size: 12px; color: #a18885;">
+                Odaberite datum preuzimanja
+            </label>
+
+            <input type="date"
+                   name="datumPreuzimanja"
+                   required
+                   class="form-control"
+                   style="border-radius: 10px; padding: 12px; max-width: 400px;" />
+        </div>
+        <div class="row g-4 mb-4">
+            <div class="col-md-6">
+                <div class="card p-4 h-100 option-card active" id="cardLicno" onclick="odaberiOpciju('Licno', 0)" style="border: 2px solid #b56c60; border-radius: 15px; background-color: #fcf8f2; cursor: pointer; transition: 0.3s;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span style="font-size: 24px;">🛍️</span>
+                        <input type="radio" name="nacinPreuzimanja" value="Licno" checked style="accent-color: #b56c60; width: 20px; height: 20px;">
+                    </div>
+                    <h5 style="color: #4a2c2a; font-weight: bold; margin-bottom: 5px;">Lično preuzimanje</h5>
+                    <p class="text-muted small" style="margin-bottom: 15px;">Odaberite kako želite preuzeti vašu narudžbu</p>
+                    <span style="color: #b56c60; font-weight: bold;">Besplatno</span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card p-4 h-100 option-card" id="cardDostava" onclick="odaberiOpciju('Dostava', 5)" style="border: 1px solid #e0e0e0; border-radius: 15px; background-color: #fff; cursor: pointer; transition: 0.3s;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span style="font-size: 24px;">🚚</span>
+                        <input type="radio" name="nacinPreuzimanja" value="Dostava" style="accent-color: #b56c60; width: 20px; height: 20px;">
+                    </div>
+                    <h5 style="color: #4a2c2a; font-weight: bold; margin-bottom: 5px;">Dostava na adresu</h5>
+                    <p class="text-muted small" style="margin-bottom: 15px;">Dostava na adresu</p>
+                    <span style="color: #b56c60; font-weight: bold;">+ 5.00 KM</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group mb-4">
+            <label class="control-label text-uppercase font-weight-bold" style="font-size: 12px; color: #a18885;">Unesite Vaš E-mail za obavijesti</label>
+            <input type="email" name="emailKupca" required class="form-control" placeholder="Npr. amina@gmail.com" style="border-radius: 10px; padding: 12px; max-width: 400px;" />
+        </div>
+        <div class="p-4 mb-4" style="background-color: #fff; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <h6 class="text-muted mb-3" style="font-weight: bold;">Pregled narudžbe</h6>
+
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Međuzbir</span>
+                <span id="prikazMedjuzbir" style="font-weight: 500;">@ViewBag.Medjuzbir KM</span>
+            </div>
+
+            <div class="d-flex justify-content-between mb-3 pb-3" style="border-bottom: 1px dashed #e0e0e0;">
+                <span class="text-muted">Dostava</span>
+                <span id="prikazDostava" style="font-weight: 500; color: #b56c60;">0.00 KM</span>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 style="color: #4a2c2a; font-weight: bold; margin: 0;">Ukupno</h5>
+                <h4 id="prikazUkupno" style="color: #4a2c2a; font-weight: bold; margin: 0;">@ViewBag.Medjuzbir KM</h4>
+            </div>
+        </div>
+
+        <button type="submit" class="btn w-100 py-3 text-white" style="background-color: #b56c60; border-radius: 12px; font-weight: bold; font-size: 16px; border: none; box-shadow: 0 4px 10px rgba(181, 108, 96, 0.3);">
+            Dalje &rarr;
+        </button>
+    </form>
+</div>
+
+
+<script>
+    let osnovnaCijena = parseFloat("@ViewBag.Medjuzbir".replace(',', '.'));
+
+    function odaberiOpciju(tip, cijenaDostave) {
+        // Označi radio dugme
+        document.querySelector(`input[value="${tip}"]`).checked = true;
+
+        // Resetuj stilove kartica
+        document.getElementById('cardLicno').style.border = "1px solid #e0e0e0";
+        document.getElementById('cardLicno').style.backgroundColor = "#fff";
+        document.getElementById('cardDostava').style.border = "1px solid #e0e0e0";
+        document.getElementById('cardDostava').style.backgroundColor = "#fff";
+
+        // Postavi aktivnu karticu
+        let aktivnaKartica = document.getElementById(`card${tip}`);
+        aktivnaKartica.style.border = "2px solid #b56c60";
+        aktivnaKartica.style.backgroundColor = "#fcf8f2";
+
+        // Izračunaj i ažuriraj cijene na panelu
+        document.getElementById('prikazDostava').innerText = cijenaDostave.toFixed(2) + " KM";
+        let ukupno = osnovnaCijena + cijenaDostave;
+        document.getElementById('prikazUkupno').innerText = ukupno.toFixed(2) + " KM";
+    }
+</script>

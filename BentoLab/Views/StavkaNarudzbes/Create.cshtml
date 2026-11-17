@@ -1,0 +1,35 @@
+﻿@model BentoLab.Models.StavkaNarudzbe
+
+@{
+    ViewData["Title"] = "Dodaj stavku";
+}
+
+<h1>Dodaj stavku u narudžbu</h1>
+<hr />
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="TortaID" class="control-label">Torta</label>
+        <select asp-for="TortaID" class="form-control" asp-items="ViewBag.TortaID"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Kolicina" class="control-label">Količina</label>
+        <input asp-for="Kolicina" class="form-control" />
+        <span asp-validation-for="Kolicina" class="text-danger"></span>
+    </div>
+
+    <p class="mt-2">
+        Cijena jedne stavke se automatski računa u sistemu.
+    </p>
+
+    <button type="submit" class="btn btn-primary">Dodaj stavku</button>
+</form>
+
+<a asp-action="Index">Nazad na stavke</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
