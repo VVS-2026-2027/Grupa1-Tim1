@@ -151,6 +151,17 @@
 
         </div>
 
+
+                @if (TempData["Poruka"] != null)
+        {
+            <div class="alert alert-success">@TempData["Poruka"]</div>
+        }
+
+        @if (TempData["Greska"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Greska"]</div>
+        }
+
         <div class="bento-table-container">
 
             <div class="table-responsive">
@@ -269,6 +280,16 @@
                                                class="btn btn-bento btn-sm">
                                             📸 Pošalji sliku
                                         </a>
+
+                                        <form asp-controller="AdminNarudzbe"
+              asp-action="OtkaziNarudzbu"
+              method="post">
+            <input type="hidden" name="id" value="@narudzba.NarudzbaID" />
+            <button type="submit" class="btn btn-soft btn-sm w-100"
+                    onclick="return confirm('Jeste li sigurni da želite otkazati narudžbu?');">
+                ❌ Otkaži
+            </button>
+        </form>
 
                                     </div>
 

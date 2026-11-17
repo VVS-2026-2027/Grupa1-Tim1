@@ -1,12 +1,12 @@
-﻿using BentoLab.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using BentoLab.Data;
 using BentoLab.Models;
+using BentoLab.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BentoLab.Controllers
 {
@@ -28,22 +28,24 @@ namespace BentoLab.Controllers
 
             return View(sveNarudzbe);
         }
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
                 return NotFound();
 
             var narudzba = await _context.Narudzbe
-            .Include(n => n.Korisnik)
-            .Include(n => n.Stavke)
-            .ThenInclude(s => s.Torta)
-            .FirstOrDefaultAsync(n => n.NarudzbaID == id);
+                .Include(n => n.Korisnik)
+                .Include(n => n.Stavke)
+                .ThenInclude(s => s.Torta)
+                .FirstOrDefaultAsync(n => n.NarudzbaID == id);
 
             if (narudzba == null)
                 return NotFound();
 
             return View(narudzba);
         }
+
         // 2. AKCIJA ZA PROMJENU STATUSA NARUDŽBE (U bazi i na ekranu)
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -64,36 +66,36 @@ namespace BentoLab.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
-// 3. OTKAZIVANJE NARUDŽBE
 
-[HttpPost]
-public async Task<IActionResult> OtkaziNarudzbu(int id)
-{
-    var narudzba = await _context.Narudzbe.FindAsync(id);
-    var servis = new NarudzbaServis();
+        // 3. OTKAZIVANJE NARUDŽBE
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> OtkaziNarudzbu(int id)
+        {
+            var narudzba = await _context.Narudzbe.FindAsync(id);
+            var servis = new NarudzbaServis();
 
-    try
-    {
-        servis.ValidirajOtkazivanje(narudzba);
-    }
-    catch (ArgumentNullException)
-    {
-        TempData["Greska"] = "Narudžba ne postoji.";
-        return RedirectToAction(nameof(Index));
-    }
-    catch (InvalidOperationException)
-    {
-        TempData["Greska"] = "Narudžba se ne može otkazati.";
-        return RedirectToAction(nameof(Index));
-    }
+            try
+            {
+                servis.ValidirajOtkazivanje(narudzba);
+            }
+            catch (ArgumentNullException)
+            {
+                TempData["Greska"] = "Narudžba ne postoji.";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (InvalidOperationException)
+            {
+                TempData["Greska"] = "Narudžba se ne može otkazati.";
+                return RedirectToAction(nameof(Index));
+            }
 
-    narudzba.Status = StatusNarudzbe.OTKAZANA;
-    await _context.SaveChangesAsync();
+            narudzba.Status = StatusNarudzbe.OTKAZANA;
+            await _context.SaveChangesAsync();
 
-    TempData["Poruka"] = "Narudžba je uspješno otkazana.";
+            TempData["Poruka"] = "Narudžba je uspješno otkazana.";
 
-    return RedirectToAction(nameof(Index));
-}
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
