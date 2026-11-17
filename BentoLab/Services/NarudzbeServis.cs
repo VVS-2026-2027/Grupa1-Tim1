@@ -9,12 +9,18 @@ namespace BentoLab.Services
         {
             if (narudzba == null)
             {
-                throw new ArgumentNullException(nameof(narudzba));
+                throw new ArgumentNullException(nameof(narudzba), "Narudžba ne postoji.");
             }
 
-            if (narudzba.Status != StatusNarudzbe.KREIRANA)
+            if (narudzba.Status == StatusNarudzbe.OTKAZANA)
             {
-                throw new InvalidOperationException("Otkazivanje je dozvoljeno samo za narudžbu u statusu KREIRANA.");
+                throw new InvalidOperationException("Narudžba je već otkazana.");
+            }
+
+            if (!narudzba.MozeSeOtkazati())
+            {
+                throw new InvalidOperationException(
+                    $"Narudžbu u statusu {narudzba.Status} nije moguće otkazati. Dozvoljeno je otkazivanje samo u statusu KREIRANA.");
             }
         }
     }
