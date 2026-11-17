@@ -17,7 +17,6 @@ namespace UnitTestiranje
         [TestMethod]
         public async Task OtkaziNarudzbu_KreiranaNarudzba_StatusPostajeOtkazanaUBazi()
         {
-            // Arrange: upisi narudzbu u bazu (prvi context)
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
@@ -33,7 +32,6 @@ namespace UnitTestiranje
                 await context.SaveChangesAsync();
             }
 
-            // Act: kontroler dobija svoj context (drugi context)
             using (var context = new ApplicationDbContext(options))
             {
                 var controller = new AdminNarudzbeController(context);
@@ -42,7 +40,6 @@ namespace UnitTestiranje
                 await controller.OtkaziNarudzbu(100);
             }
 
-            // Assert: treci, potpuno novi context cita iz baze
             using (var context = new ApplicationDbContext(options))
             {
                 var narudzba = await context.Narudzbe.FindAsync(100);
@@ -53,7 +50,6 @@ namespace UnitTestiranje
         [TestMethod]
         public async Task OtkaziNarudzbu_KreiranaNarudzba_PostavljaPorukuUTempData()
         {
-            // Arrange
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
@@ -71,48 +67,68 @@ namespace UnitTestiranje
             controller.TempData = new TempDataDictionary(
                 new DefaultHttpContext(), new LazniTempDataProvider());
 
-            // Act
             await controller.OtkaziNarudzbu(100);
 
-            // Assert
             Assert.AreEqual("Narudžba je uspješno otkazana.", controller.TempData["Poruka"]);
         }
 
         [TestMethod]
-public async Task OtkaziNarudzbu_PotvrdjenaNarudzba_StatusSeNeMijenjaUBazi()
-{
-    // Arrange
-    var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-        .UseInMemoryDatabase(Guid.NewGuid().ToString())
-        .Options;
-
-    using (var context = new ApplicationDbContext(options))
-    {
-        context.Narudzbe.Add(new Narudzba
+        public async Task OtkaziNarudzbu_PotvrdjenaNarudzba_StatusSeNeMijenjaUBazi()
         {
-            NarudzbaID = 100,
-            KorisnikID = 1,
-            Status = StatusNarudzbe.POTVRDJENA
-        });
-        await context.SaveChangesAsync();
-    }
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
 
-    // Act
-    using (var context = new ApplicationDbContext(options))
-    {
-        var controller = new AdminNarudzbeController(context);
-        controller.TempData = new TempDataDictionary(
-            new DefaultHttpContext(), new LazniTempDataProvider());
-        await controller.OtkaziNarudzbu(100);
-    }
+            using (var context = new ApplicationDbContext(options))
+            {
+                context.Narudzbe.Add(new Narudzba
+                {
+                    NarudzbaID = 100,
+                    KorisnikID = 1,
+                    Status = StatusNarudzbe.POTVRDJENA
+                });
+                await context.SaveChangesAsync();
+            }
 
-    // Assert
-    using (var context = new ApplicationDbContext(options))
-    {
-        var narudzba = await context.Narudzbe.FindAsync(100);
-        Assert.AreEqual(StatusNarudzbe.POTVRDJENA, narudzba!.Status);
-    }
-}
+            using (var context = new ApplicationDbContext(options))
+            {
+                var controller = new AdminNarudzbeController(context);
+                controller.TempData = new TempDataDictionary(
+                    new DefaultHttpContext(), new LazniTempDataProvider());
+                await controller.OtkaziNarudzbu(100);
+            }
+
+            using (var context = new ApplicationDbContext(options))
+            {
+                var narudzba = await context.Narudzbe.FindAsync(100);
+                Assert.AreEqual(StatusNarudzbe.POTVRDJENA, narudzba!.Status);
+            }
+        }
+
+        [TestMethod]
+        public async Task OtkaziNarudzbu_PotvrdjenaNarudzba_PostavljaPorukuGreske()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+
+            using var context = new ApplicationDbContext(options);
+            context.Narudzbe.Add(new Narudzba
+            {
+                NarudzbaID = 100,
+                KorisnikID = 1,
+                Status = StatusNarudzbe.POTVRDJENA
+            });
+            await context.SaveChangesAsync();
+
+            var controller = new AdminNarudzbeController(context);
+            controller.TempData = new TempDataDictionary(
+                new DefaultHttpContext(), new LazniTempDataProvider());
+
+            await controller.OtkaziNarudzbu(100);
+
+            Assert.AreEqual("Narudžba se ne može otkazati.", controller.TempData["Greska"]);
+        }
     }
 
     public class LazniTempDataProvider : ITempDataProvider
