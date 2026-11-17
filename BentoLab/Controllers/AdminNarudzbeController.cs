@@ -77,11 +77,16 @@ public async Task<IActionResult> OtkaziNarudzbu(int id)
     {
         servis.ValidirajOtkazivanje(narudzba);
     }
-    catch (Exception)
-{
-    TempData["Greska"] = "Narudžba se ne može otkazati.";
-    return RedirectToAction(nameof(Index));
-}
+    catch (ArgumentNullException)
+    {
+        TempData["Greska"] = "Narudžba ne postoji.";
+        return RedirectToAction(nameof(Index));
+    }
+    catch (InvalidOperationException)
+    {
+        TempData["Greska"] = "Narudžba se ne može otkazati.";
+        return RedirectToAction(nameof(Index));
+    }
 
     narudzba.Status = StatusNarudzbe.OTKAZANA;
     await _context.SaveChangesAsync();
