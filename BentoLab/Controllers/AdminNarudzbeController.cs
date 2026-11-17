@@ -68,6 +68,11 @@ namespace BentoLab.Controllers
 [HttpPost]
 public async Task<IActionResult> OtkaziNarudzbu(int id)
 {
+    var narudzba = await _context.Narudzbe.FindAsync(id);
+
+    narudzba.Status = StatusNarudzbe.OTKAZANA;
+    await _context.SaveChangesAsync();
+
     return RedirectToAction(nameof(Index));
 }
     }
