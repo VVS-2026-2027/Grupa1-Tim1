@@ -1,0 +1,14 @@
+[
+	{
+		"NoviStatus": "POTVRDJENA",
+		"OcekivaniStatus": "POTVRDJENA"
+	},
+	{
+		"NoviStatus": "KREIRANA",
+		"OcekivaniStatus": "KREIRANA"
+	},
+	{
+		"NoviStatus": "POGRESAN_STATUS",
+		"OcekivaniStatus": "KREIRANA"
+	}
+]
