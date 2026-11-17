@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Slikanje Bento Torte";
+}
+
+<div class="container text-center py-5" style="background-color: #faf5f5; border-radius: 15px; max-width: 600px; margin-top: 30px; box-shadow: 0px 4px 10px rgba(0,0,0,0.05);">
+    <h2 style="color: #b56c60; font-weight: bold;">📸 Kuhinjska Kamera</h2>
+    <p class="text-muted">Uslikajte završenu bento tortu za narudžbu <strong>#@ViewBag.NarudzbaId</strong></p>
+
+    <div class="mx-auto" style="width: 400px; height: 300px; border: 4px solid #fff; border-radius: 10px; overflow: hidden; background-color: #333; box-shadow: 0px 4px 6px rgba(0,0,0,0.1);">
+        <video id="web_kamera" width="400" height="300" autoplay playsinline style="transform: scaleX(-1);"></video>
+    </div>
+
+    <div class="mt-4">
+        <button id="okini_dugme" class="btn btn-lg text-white px-4" style="background-color: #b56c60; border-radius: 20px; font-weight: bold;">
+            Uslikaj Tortu
+        </button>
+    </div>
+
+    <canvas id="skriveni_platno" width="400" height="300" style="display:none;"></canvas>
+
+    <div id="pregled_slike_div" class="mt-4" style="display:none;">
+        <h5 class="text-secondary">Izgled fotografije:</h5>
+        <div class="mx-auto my-3" style="width: 400px; height: 300px; border-radius: 10px; overflow: hidden; border: 3px solid #b56c60;">
+            <img id="prikaz_slike" src="" style="width: 100%; height: 100%; object-fit: cover;" />
+        </div>
+
+        <form asp-controller="Kamera" asp-action="SpasiSliku" method="post">
+            <input type="hidden" name="narudzbaId" value="@ViewBag.NarudzbaId" />
+            <input type="hidden" name="base64Image" id="slika_string_input" />
+
+            <button type="submit" class="btn btn-success btn-lg px-4 mr-2" style="border-radius: 20px; font-weight: bold;">
+                Spremi i pošalji kupcu
+            </button>
+            <button type="button" onclick="location.reload();" class="btn btn-secondary btn-lg px-4" style="border-radius: 20px;">
+                Uslikaj ponovo
+            </button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const video = document.getElementById('web_kamera');
+        const canvas = document.getElementById('skriveni_platno');
+        const okiniDugme = document.getElementById('okini_dugme');
+        const prikazSlike = document.getElementById('prikaz_slike');
+        const slikaInput = document.getElementById('slika_string_input');
+        const pregledDiv = document.getElementById('pregled_slike_div');
+
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    video.srcObject = stream;
+                    video.play();
+                })
+                .catch(function (error) {
+                    alert("Kamera se ne može otvoriti. Provjerite dozvole.");
+                });
+        }
+
+        okiniDugme.addEventListener('click', function () {
+            canvas.getContext('2d').drawImage(video, 0, 0, 400, 300);
+            const dataUrl = canvas.toDataURL('image/jpeg');
+            prikazSlike.src = dataUrl;
+            slikaInput.value = dataUrl;
+
+            video.parentElement.style.display = 'none';
+            okiniDugme.style.display = 'none';
+            pregledDiv.style.display = 'block';
+        });
+    </script>
+}

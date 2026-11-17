@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Cjenovnik Sastojaka";
+}
+
+<div class="container mt-4" style="max-width: 800px; background-color: #f4f1de; padding: 30px; border-radius: 20px;">
+    <div class="mb-3">
+        <a asp-action="Index" class="btn btn-outline-secondary">&larr; Nazad na izbor</a>
+    </div>
+
+    <h3 class="text-center mb-4" style="color: #e07a5f; font-weight: bold;">📋 CJENOVNIK SASTOJAKA I UKRASA</h3>
+
+    <div class="card shadow-sm border-0 mb-4 rounded-3 overflow-hidden">
+        <table class="table table-hover mb-0 text-center align-middle">
+            <thead style="background-color: #3d405b; color: white;">
+                <tr>
+                    <th>Kategorija</th>
+                    <th>Stavka / Ukras</th>
+                    <th>Cijena (KM)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="3" class="fw-bold bg-light" style="color: #3d405b;">Osnova / Okus</td>
+                    <td>Klasični okusi (Crunchy, Vanilija)</td>
+                    <td>20.00 KM</td>
+                </tr>
+                <tr>
+                    <td>Premium okusi (Bueno, Nutella)</td>
+                    <td>22.00 KM</td>
+                </tr>
+                <tr>
+                    <td>Ekskluzivni okusi (Raffaelo, Berry pistachio)</td>
+                    <td>23.00 KM - 25.00 KM</td>
+                </tr>
+                <tr class="table-light">
+                    <td rowspan="4" class="fw-bold" style="color: #e07a5f;">Bento Ukrasi</td>
+                    <td>Perlice / Šljokice</td>
+                    <td>+ 1.00 KM</td>
+                </tr>
+                <tr class="table-light">
+                    <td>Jestivo Cvijeće</td>
+                    <td>+ 2.00 KM</td>
+                </tr>
+                <tr class="table-light">
+                    <td>Mašnice</td>
+                    <td>+ 3.00 KM</td>
+                </tr>
+                <tr class="table-light">
+                    <td>Custom Figurica</td>
+                    <td>+ 5.00 KM</td>
+                </tr>
+                <tr>
+                    <td rowspan="2" class="fw-bold bg-light" style="color: #3d405b;">Dodaci & Šlag</td>
+                    <td>Vrsta Šlaga (Čokolada, Vanilija, Jagoda)</td>
+                    <td>+ 1.00 KM</td>
+                </tr>
+                <tr>
+                    <td>Komadići voća / Orašasti plodovi / Keks</td>
+                    <td>+ 1.00 KM</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="alert alert-info text-center" style="background-color: #f2cc8f; border: none; color: #3d405b;">
+        <strong>Napomena:</strong> Na ukupan zbir osnovnih sastojaka i izabranih dekoracija primjenjuje se <strong>koeficijent složenosti dizajna (x1.25)</strong> za ručni rad slastičara.
+    </div>
+</div>
