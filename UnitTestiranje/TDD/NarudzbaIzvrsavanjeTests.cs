@@ -77,6 +77,42 @@ namespace UnitTestiranje
             // Assert
             Assert.AreEqual("Narudžba je uspješno otkazana.", controller.TempData["Poruka"]);
         }
+
+        [TestMethod]
+public async Task OtkaziNarudzbu_PotvrdjenaNarudzba_StatusSeNeMijenjaUBazi()
+{
+    // Arrange
+    var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        .UseInMemoryDatabase(Guid.NewGuid().ToString())
+        .Options;
+
+    using (var context = new ApplicationDbContext(options))
+    {
+        context.Narudzbe.Add(new Narudzba
+        {
+            NarudzbaID = 100,
+            KorisnikID = 1,
+            Status = StatusNarudzbe.POTVRDJENA
+        });
+        await context.SaveChangesAsync();
+    }
+
+    // Act
+    using (var context = new ApplicationDbContext(options))
+    {
+        var controller = new AdminNarudzbeController(context);
+        controller.TempData = new TempDataDictionary(
+            new DefaultHttpContext(), new LazniTempDataProvider());
+        await controller.OtkaziNarudzbu(100);
+    }
+
+    // Assert
+    using (var context = new ApplicationDbContext(options))
+    {
+        var narudzba = await context.Narudzbe.FindAsync(100);
+        Assert.AreEqual(StatusNarudzbe.POTVRDJENA, narudzba!.Status);
+    }
+}
     }
 
     public class LazniTempDataProvider : ITempDataProvider
