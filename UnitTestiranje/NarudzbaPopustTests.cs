@@ -59,5 +59,20 @@ namespace UnitTestiranje
 
             Assert.ThrowsExactly<ArgumentException>(() => narudzba.PrimijeniPopust(-5.00));
         }
+
+        [DataTestMethod]
+        [DataRow(40.00, 0.00, 40.00)]
+        [DataRow(60.00, 3.00, 57.00)]
+        [DataRow(120.00, 12.00, 108.00)]
+        public void IzracunajIPrimijeniPopust_RazlicitiPragovi_VracaIspravnuKonacnuCijenu(
+            double medjuzbir, double ocekivaniPopust, double ocekivanaKonacnaCijena)
+        {
+            double popust = Narudzba.IzracunajPopust(medjuzbir);
+            var narudzba = new Narudzba { UkupnaCijena = medjuzbir };
+            double konacna = narudzba.PrimijeniPopust(popust);
+
+            Assert.AreEqual(ocekivaniPopust, popust, 0.001);
+            Assert.AreEqual(ocekivanaKonacnaCijena, konacna, 0.001);
+        }
     }
 }

@@ -1,26 +1,29 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
-
+using BentoLab.Services;
 
 namespace BentoLab.Models
 {
     public class Narudzba
     {
+        public static double IzracunajPopust(double iznos)
+        {
+            var calculator = new PopustCalculator();
+            decimal procenat = calculator.IzracunajProcenat((decimal)iznos);
+            decimal popust = Math.Round((decimal)iznos * (procenat / 100m), 2, MidpointRounding.AwayFromZero);
+
+            return (double)popust;
+        }
+
         public double PrimijeniPopust(double iznosPopusta)
         {
             if (iznosPopusta < 0)
-            {
                 throw new ArgumentException("Iznos popusta ne može biti negativan.", nameof(iznosPopusta));
-            }
 
-            decimal novaCijena = (decimal)UkupnaCijena - (decimal)iznosPopusta;
-            if (novaCijena < 0m)
-            {
-                novaCijena = 0m;
-            }
+            decimal umanjenaCijena = Math.Max(0m, (decimal)UkupnaCijena - (decimal)iznosPopusta);
+            UkupnaCijena = (double)Math.Round(umanjenaCijena, 2, MidpointRounding.AwayFromZero);
 
-            UkupnaCijena = (double)Math.Round(novaCijena, 2, MidpointRounding.AwayFromZero);
             return UkupnaCijena;
         }
 

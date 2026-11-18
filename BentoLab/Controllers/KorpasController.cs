@@ -41,8 +41,12 @@ namespace BentoLab.Controllers
                 }
             }
 
-            ViewBag.Medjuzbir = medjuzbir.ToString("F2", CultureInfo.InvariantCulture);
+            double popust = Narudzba.IzracunajPopust(medjuzbir);
+            double konacnaCijena = Math.Round(medjuzbir - popust, 2, MidpointRounding.AwayFromZero);
 
+            ViewBag.Medjuzbir = medjuzbir.ToString("F2", CultureInfo.InvariantCulture);
+            ViewBag.Popust = popust.ToString("F2", CultureInfo.InvariantCulture);
+            ViewBag.KonacnaCijena = konacnaCijena.ToString("F2", CultureInfo.InvariantCulture);
             TempData.Keep("NazivKreiraneTorte");
             TempData.Keep("CijenaKreiraneTorte");
 
@@ -166,14 +170,15 @@ namespace BentoLab.Controllers
                     korisnikId = prviKorisnik.Id;
             }
 
-            double ukupno = 0;
+            double medjuzbir = 0;
 
             foreach (var cijena in cijene)
             {
-                ukupno += double.Parse(cijena, CultureInfo.InvariantCulture);
+                medjuzbir += double.Parse(cijena, CultureInfo.InvariantCulture);
             }
 
-            ukupno += cijenaDostave;
+            double popust = Narudzba.IzracunajPopust(medjuzbir);
+            double ukupno = medjuzbir + cijenaDostave;
 
             var narudzba = new Narudzba
             {
@@ -185,6 +190,8 @@ namespace BentoLab.Controllers
                 DatumPreuzimanja = DateTime.SpecifyKind(datumPreuzimanja, DateTimeKind.Utc),
                 NacinPreuzimanja = nacinPreuzimanja
             };
+
+            narudzba.PrimijeniPopust(popust);
 
             _context.Narudzbe.Add(narudzba);
             _context.SaveChanges();

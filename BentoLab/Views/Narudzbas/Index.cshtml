@@ -28,7 +28,7 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td><strong>@item.UkupnaCijena KM</strong></td>
+                            <td><strong>@item.UkupnaCijena.ToString("F2") KM</strong></td>
                             <td>
                                 <span class="badge @(item.Status.ToString() == "ZAVRSENA" ? "bg-success" : "bg-warning text-dark")">
                                     @item.Status

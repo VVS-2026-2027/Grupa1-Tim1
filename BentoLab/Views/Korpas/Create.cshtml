@@ -54,14 +54,19 @@
                 <span id="prikazMedjuzbir" style="font-weight: 500;">@ViewBag.Medjuzbir KM</span>
             </div>
 
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Popust</span>
+                <span id="prikazPopust" style="font-weight: 500; color: #2e7d32;">- @(ViewBag.Popust ?? "0.00") KM</span>
+            </div>
+
             <div class="d-flex justify-content-between mb-3 pb-3" style="border-bottom: 1px dashed #e0e0e0;">
                 <span class="text-muted">Dostava</span>
                 <span id="prikazDostava" style="font-weight: 500; color: #b56c60;">0.00 KM</span>
             </div>
 
             <div class="d-flex justify-content-between align-items-center">
-                <h5 style="color: #4a2c2a; font-weight: bold; margin: 0;">Ukupno</h5>
-                <h4 id="prikazUkupno" style="color: #4a2c2a; font-weight: bold; margin: 0;">@ViewBag.Medjuzbir KM</h4>
+                <h5 style="color: #4a2c2a; font-weight: bold; margin: 0;">Konačna cijena</h5>
+                <h4 id="prikazUkupno" style="color: #4a2c2a; font-weight: bold; margin: 0;">@(ViewBag.KonacnaCijena ?? ViewBag.Medjuzbir) KM</h4>
             </div>
         </div>
 
@@ -71,28 +76,24 @@
     </form>
 </div>
 
-
 <script>
-    let osnovnaCijena = parseFloat("@ViewBag.Medjuzbir".replace(',', '.'));
+    let osnovnaCijena = parseFloat("@ViewBag.Medjuzbir".replace(',', '.')) || 0;
+    let iznosPopusta = parseFloat("@(ViewBag.Popust ?? "0")".replace(',', '.')) || 0;
 
     function odaberiOpciju(tip, cijenaDostave) {
-        // Označi radio dugme
         document.querySelector(`input[value="${tip}"]`).checked = true;
 
-        // Resetuj stilove kartica
         document.getElementById('cardLicno').style.border = "1px solid #e0e0e0";
         document.getElementById('cardLicno').style.backgroundColor = "#fff";
         document.getElementById('cardDostava').style.border = "1px solid #e0e0e0";
         document.getElementById('cardDostava').style.backgroundColor = "#fff";
 
-        // Postavi aktivnu karticu
         let aktivnaKartica = document.getElementById(`card${tip}`);
         aktivnaKartica.style.border = "2px solid #b56c60";
         aktivnaKartica.style.backgroundColor = "#fcf8f2";
 
-        // Izračunaj i ažuriraj cijene na panelu
         document.getElementById('prikazDostava').innerText = cijenaDostave.toFixed(2) + " KM";
-        let ukupno = osnovnaCijena + cijenaDostave;
+        let ukupno = Math.max(0, osnovnaCijena - iznosPopusta + cijenaDostave);
         document.getElementById('prikazUkupno').innerText = ukupno.toFixed(2) + " KM";
     }
 </script>
