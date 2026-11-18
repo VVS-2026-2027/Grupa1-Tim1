@@ -1,0 +1,17 @@
+[
+  {
+    "ImePrezime": "Amra Test",
+    "Email": "amra@bentolab.ba",
+    "Uloga": "KUPAC"
+  },
+  {
+    "ImePrezime": "Admin Test",
+    "Email": "admin@bentolab.ba",
+    "Uloga": "ADMIN"
+  },
+  {
+    "ImePrezime": "Lea Test",
+    "Email": "lea@bentolab.ba",
+    "Uloga": "KUPAC"
+  }
+]

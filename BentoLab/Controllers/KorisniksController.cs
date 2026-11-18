@@ -34,7 +34,7 @@ namespace BentoLab.Controllers
             }
 
             var korisnik = await _context.Korisnik
-                .FirstOrDefaultAsync(m => m.KorisnikID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (korisnik == null)
             {
                 return NotFound();
@@ -88,7 +88,7 @@ namespace BentoLab.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("KorisnikID,ImePrezime,Email,Lozinka,Uloga")] Korisnik korisnik)
         {
-            if (id != korisnik.KorisnikID)
+            if (id != korisnik.Id)
             {
                 return NotFound();
             }
@@ -125,7 +125,7 @@ namespace BentoLab.Controllers
             }
 
             var korisnik = await _context.Korisnik
-                .FirstOrDefaultAsync(m => m.KorisnikID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (korisnik == null)
             {
                 return NotFound();
@@ -151,7 +151,7 @@ namespace BentoLab.Controllers
 
         private bool KorisnikExists(int id)
         {
-            return _context.Korisnik.Any(e => e.KorisnikID == id);
+            return _context.Korisnik.Any(e => e.Id == id);
         }
     }
 }
