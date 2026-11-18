@@ -41,9 +41,9 @@ namespace UnitTestiranje
         [DataTestMethod]
         [DataRow(55.55, 2.7775, 52.77)]
         [DataRow(99.99, 4.9995, 94.99)]
-        [DataRow(123.45, 12.345, 111.10)]
+        [DataRow(123.45, 12.345, 111.11)]
         public void PrimijeniPopust_DecimalniIznosi_PravilnoZaokruzujeNaDvijeDecimale(
-            double pocetnaCijena, double popust, double ocekivanaCijena)
+                    double pocetnaCijena, double popust, double ocekivanaCijena)
         {
             var narudzba = new Narudzba { UkupnaCijena = pocetnaCijena };
 

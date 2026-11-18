@@ -9,7 +9,19 @@ namespace BentoLab.Models
     {
         public double PrimijeniPopust(double iznosPopusta)
         {
-            throw new NotImplementedException();
+            if (iznosPopusta < 0)
+            {
+                throw new ArgumentException("Iznos popusta ne može biti negativan.", nameof(iznosPopusta));
+            }
+
+            decimal novaCijena = (decimal)UkupnaCijena - (decimal)iznosPopusta;
+            if (novaCijena < 0m)
+            {
+                novaCijena = 0m;
+            }
+
+            UkupnaCijena = (double)Math.Round(novaCijena, 2, MidpointRounding.AwayFromZero);
+            return UkupnaCijena;
         }
 
         [Key]
