@@ -7,7 +7,13 @@ namespace BentoLab.Models
 {
     public class Narudzba
     {
+        public double PrimijeniPopust(double iznosPopusta)
+        {
+            throw new NotImplementedException();
+        }
+
         [Key]
+
         public int NarudzbaID { get; set; }
 
         public double UkupnaCijena { get; set; }
